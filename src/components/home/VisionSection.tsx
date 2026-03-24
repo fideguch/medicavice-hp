@@ -12,11 +12,11 @@ export default function VisionSection() {
         </h2>
       </div>
 
-      {/* テキストグリッド（課題・解決策）— 高さを揃える */}
-      <div className="grid md:grid-cols-[1fr_2fr] gap-8 md:gap-16 items-start">
+      {/* 課題 / 解決策 — 2カラム */}
+      <div className="grid md:grid-cols-2 gap-8 md:gap-16 mb-16">
         {/* 課題 */}
-        <div className="border-t border-[#1E293B]/12 pt-8">
-          <span className="text-xs text-[#64748B] tracking-[0.15em] uppercase font-medium block mb-6">
+        <div className="border-t border-[#E2E8F0] pt-8">
+          <span className="text-xs text-[#64748B] tracking-[0.15em] uppercase font-medium block mb-5">
             課題
           </span>
           <h3 className="text-headline text-[#1E293B] mb-5">
@@ -27,19 +27,19 @@ export default function VisionSection() {
           </p>
         </div>
 
-        {/* 解決策（テキスト + リンクのみ） */}
+        {/* 解決策 */}
         <div className="border-t-2 border-[#1E293B] pt-8">
-          <span className="text-xs text-[#64748B] tracking-[0.15em] uppercase font-medium block mb-6">
+          <span className="text-xs text-[#64748B] tracking-[0.15em] uppercase font-medium block mb-5">
             解決策
           </span>
           <h3 className="text-headline text-[#1E293B] mb-5">
             医療とITの融合で、<br />現場の課題を解き続ける
           </h3>
-          <p className="text-sm text-[#64748B] leading-loose mb-6">
+          <p className="text-sm text-[#64748B] leading-loose mb-4">
             株式会社メディモニーとの共同開発により、医師の言葉をリアルタイムで文字化するタブレット型デバイスを提供します。現場の医師と患者さんが、安心して向き合えるコミュニケーション環境を実現します。
           </p>
-          <p className="text-sm text-[#64748B] leading-loose mb-8">
-            音声文字化をはじめ、医療とITを掛け合わせた多角的なコンサルティングを今後も継続的に展開してまいります。臨床経験から生まれた現場視点と、テクノロジーへの深い理解を組み合わせ、社会に真に必要とされるソリューションを生み出し続けることが当社の使命です。
+          <p className="text-sm text-[#64748B] leading-loose mb-7">
+            音声文字化をはじめ、医療とITを掛け合わせた多角的なコンサルティングを今後も継続的に展開してまいります。
           </p>
           <a
             href="https://www.medimony.co.jp/"
@@ -53,8 +53,8 @@ export default function VisionSection() {
         </div>
       </div>
 
-      {/* フルワイド: WaWaTalk iframe */}
-      <div className="mt-6">
+      {/* WaWaTalk デモ — フルワイド */}
+      <div>
         <p className="text-xs font-medium tracking-[0.15em] uppercase mb-4" style={{ color: '#64748B' }}>
           デバイスデモ — WaWaTalk
         </p>

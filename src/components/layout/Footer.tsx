@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 const NAV_LINKS = [
   { href: '/', label: 'トップ' },
@@ -12,8 +13,57 @@ const NAV_LINKS = [
 
 export default function Footer() {
   const pathname = usePathname()
+  const currentIndex = NAV_LINKS.findIndex((l) =>
+    l.href === '/' ? pathname === '/' : pathname.startsWith(l.href)
+  )
+  const prev = currentIndex > 0 ? NAV_LINKS[currentIndex - 1] : null
+  const next = currentIndex < NAV_LINKS.length - 1 ? NAV_LINKS[currentIndex + 1] : null
+
   return (
     <footer style={{ backgroundColor: '#0F172A' }}>
+
+      {/* prev / next ナビゲーション */}
+      {(prev || next) && (
+        <div style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="flex">
+              {/* prev */}
+              <div className="flex-1" style={{ borderRight: next ? '1px solid rgba(255,255,255,0.08)' : 'none' }}>
+                {prev && (
+                  <Link
+                    href={prev.href}
+                    className="flex items-center gap-4 py-7 group transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white"
+                  >
+                    <ArrowLeft size={16} style={{ color: 'rgba(255,255,255,0.6)' }} className="transition-transform group-hover:-translate-x-0.5" aria-hidden="true" />
+                    <span>
+                      <span className="block text-xs tracking-widest uppercase mb-1" style={{ color: 'rgba(255,255,255,0.6)' }}>previous</span>
+                      <span className="block text-sm font-medium" style={{ color: 'rgba(255,255,255,0.75)' }}>{prev.label}</span>
+                    </span>
+                  </Link>
+                )}
+              </div>
+
+              {/* next */}
+              <div className="flex-1">
+                {next && (
+                  <Link
+                    href={next.href}
+                    className="flex items-center justify-end gap-4 py-7 text-right group transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white"
+                  >
+                    <span>
+                      <span className="block text-xs tracking-widest uppercase mb-1" style={{ color: 'rgba(255,255,255,0.6)' }}>next</span>
+                      <span className="block text-sm font-medium" style={{ color: 'rgba(255,255,255,0.75)' }}>{next.label}</span>
+                    </span>
+                    <ArrowRight size={16} style={{ color: 'rgba(255,255,255,0.6)' }} className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* メインフッター */}
       <div className="max-w-5xl mx-auto px-6 pt-10 md:pt-16 pb-10">
         {/* 上部：ロゴ + ナビ */}
         <div
@@ -39,7 +89,7 @@ export default function Footer() {
                 株式会社メディカバイス
               </p>
             </Link>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginTop: '8px', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)', marginTop: '8px', lineHeight: 1.6 }}>
               現場に寄り添う、確かな医療を。
             </p>
           </div>
@@ -58,27 +108,9 @@ export default function Footer() {
                     <span
                       key={link.href}
                       aria-current="page"
-                      style={{
-                        fontSize: '13px',
-                        fontWeight: 500,
-                        color: '#FFFFFF',
-                        cursor: 'default',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                      }}
+                      style={{ fontSize: '13px', fontWeight: 500, color: '#FFFFFF', cursor: 'default', display: 'flex', alignItems: 'center', gap: '6px' }}
                     >
-                      <span
-                        aria-hidden="true"
-                        style={{
-                          display: 'inline-block',
-                          width: '4px',
-                          height: '4px',
-                          borderRadius: '50%',
-                          backgroundColor: 'rgba(255,255,255,0.5)',
-                          flexShrink: 0,
-                        }}
-                      />
+                      <span aria-hidden="true" style={{ display: 'inline-block', width: '4px', height: '4px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.5)', flexShrink: 0 }} />
                       {link.label}
                     </span>
                   ) : (
@@ -94,12 +126,12 @@ export default function Footer() {
                 })}
               </div>
 
-              {/* 連絡先列 */}
+              {/* 所在地列 */}
               <div className="flex flex-col gap-3 items-center md:items-start">
                 <p style={{ fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.75)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                   所在地
                 </p>
-                <p className="text-center md:text-left" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', lineHeight: 1.6 }}>
+                <p className="text-center md:text-left" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.65)', lineHeight: 1.6 }}>
                   〒141-0031<br />東京都品川区西五反田5-23-3
                 </p>
               </div>
@@ -107,9 +139,9 @@ export default function Footer() {
           </nav>
         </div>
 
-        {/* 下部：コピーライト — SP中央寄せ */}
+        {/* 下部：コピーライト */}
         <div className="flex flex-col items-center gap-3 pt-8 sm:flex-row sm:justify-between sm:items-center">
-          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.65)' }}>
             © 株式会社メディカバイス All rights reserved.
           </p>
           <Link
