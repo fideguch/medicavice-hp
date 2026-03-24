@@ -48,7 +48,7 @@ export default function HeroSection() {
               style={{ aspectRatio: '3/2', borderRadius: '6px' }}
             >
               <Image
-                src="/トップページファーストビュー.png"
+                src="/hero.png"
                 alt="医療現場で患者に寄り添う医療従事者のイメージ"
                 fill
                 className="object-cover object-center"
@@ -77,7 +77,7 @@ export default function HeroSection() {
             style={{ width: '44%', aspectRatio: '4/3', borderRadius: '8px' }}
           >
             <Image
-              src="/トップページファーストビュー.png"
+              src="/hero.png"
               alt="医療現場で患者に寄り添う医療従事者のイメージ"
               fill
               className="object-cover object-center"

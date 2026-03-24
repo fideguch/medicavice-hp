@@ -28,7 +28,7 @@ export default function Footer() {
               aria-label="株式会社メディカバイス — トップページへ"
             >
               <img
-                src="/会社ロゴ.png"
+                src="/logo.png"
                 alt=""
                 aria-hidden="true"
                 width={24}

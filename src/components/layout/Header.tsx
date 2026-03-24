@@ -102,7 +102,7 @@ export default function Header() {
         >
           {/* 企業ロゴ */}
           <img
-            src="/会社ロゴ.png"
+            src="/logo.png"
             alt=""
             aria-hidden="true"
             width={32}

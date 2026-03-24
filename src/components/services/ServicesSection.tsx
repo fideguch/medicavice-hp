@@ -72,7 +72,7 @@ export default function ServicesSection() {
           {/* サービス紹介画像 */}
           <div className="relative hidden md:block md:w-72 shrink-0" style={{ minHeight: '280px' }}>
             <Image
-              src="/サービス紹介.png"
+              src="/services.png"
               alt="医療デバイス開発コンサルティングのイメージ"
               fill
               className="object-cover object-center"

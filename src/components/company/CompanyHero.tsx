@@ -45,7 +45,7 @@ export default function CompanyHero() {
             style={{ width: '300px', height: '380px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', overflow: 'hidden' }}
           >
             <Image
-              src="/企業紹介.png"
+              src="/company.png"
               alt="株式会社メディカバイス 代表 出口誠のイメージ"
               fill
               className="object-cover object-center"
