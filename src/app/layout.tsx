@@ -48,10 +48,8 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/会社ロゴ.png', type: 'image/png' },
-    ],
+    icon: '/icon.png',
+    apple: '/icon.png',
   },
   robots: { index: true, follow: true },
 }
