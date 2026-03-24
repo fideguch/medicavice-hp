@@ -6,9 +6,15 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: '企業情報 | 株式会社メディカバイス',
+  title: '企業情報',
   description:
     '株式会社メディカバイスの会社概要と代表取締役 出口誠の経歴をご紹介します。',
+  openGraph: {
+    title: '企業情報 | 株式会社メディカバイス',
+    description:
+      '株式会社メディカバイスの会社概要と代表取締役 出口誠の経歴をご紹介します。',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: '株式会社メディカバイス' }],
+  },
 }
 
 export default function CompanyPage() {

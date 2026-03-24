@@ -2,9 +2,15 @@ import type { Metadata } from 'next'
 import ServicesSection from '@/components/services/ServicesSection'
 
 export const metadata: Metadata = {
-  title: 'サービス概要 | 株式会社メディカバイス',
+  title: 'サービス概要',
   description:
     '医師としての臨床経験をもとに、医療デバイス開発コンサルティングを中心にITなど様々な分野でサービスを展開しています。',
+  openGraph: {
+    title: 'サービス概要 | 株式会社メディカバイス',
+    description:
+      '医師としての臨床経験をもとに、医療デバイス開発コンサルティングを中心にITなど様々な分野でサービスを展開しています。',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: '株式会社メディカバイス' }],
+  },
 }
 
 export default function ServicesPage() {

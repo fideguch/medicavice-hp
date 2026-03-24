@@ -3,9 +3,15 @@ import SectionWrapper from '@/components/ui/SectionWrapper'
 import ContactForm from '@/components/contact/ContactForm'
 
 export const metadata: Metadata = {
-  title: 'お問い合わせ | 株式会社メディカバイス',
+  title: 'お問い合わせ',
   description:
     '株式会社メディカバイスへのお問い合わせはこちらから。医療・IT分野問わずご相談をお受けしています。',
+  openGraph: {
+    title: 'お問い合わせ | 株式会社メディカバイス',
+    description:
+      '株式会社メディカバイスへのお問い合わせはこちらから。医療・IT分野問わずご相談をお受けしています。',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: '株式会社メディカバイス' }],
+  },
 }
 
 export default function ContactPage() {
