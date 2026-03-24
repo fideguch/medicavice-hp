@@ -71,15 +71,23 @@ export default function Header() {
     setTheme(detectTheme())
   }, [pathname])
 
-  // スクロール連動検出 + スクロール時にメニューを閉じる
+  // スクロール連動テーマ検出
   useEffect(() => {
-    const onScroll = () => {
-      setTheme(detectTheme())
-      setMenuOpen(false)
-    }
+    const onScroll = () => setTheme(detectTheme())
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // メニュー展開中のみ：意図的なスクロール（10px超）でメニューを閉じる
+  useEffect(() => {
+    if (!menuOpen) return
+    const startY = window.scrollY
+    const onScroll = () => {
+      if (Math.abs(window.scrollY - startY) > 10) setMenuOpen(false)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [menuOpen])
 
   // ルート変更時にメニューを閉じる
   useEffect(() => { setMenuOpen(false) }, [pathname])
