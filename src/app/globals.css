@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+/* ===== デザイントークン ===== */
+
+@theme {
+  --color-base: #FDFBF7;
+  --color-surface: #FFFFFF;
+  --color-primary: #1E293B;
+  --color-accent: #0F172A;
+  --color-muted: #64748B;
+  --font-sans: 'Noto Sans JP', sans-serif;
+}
+
+/* ===== ベースリセット ===== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FDFBF7;
+  color: #1E293B;
+  font-family: 'Noto Sans JP', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: manipulation;
+}
+
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* ===== 見出しユーティリティ ===== */
+
+/* セクション見出し h2 — color は各コンポーネント側で指定 */
+.text-section {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+/* サブ見出し h3 — color は各コンポーネント側で指定 */
+.text-headline {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.45;
+}
+
+/* ===== ボタンユーティリティ ===== */
+
+.btn-navy {
+  background-color: #0F172A;
+  color: #FFFFFF;
+  transition: background-color 0.2s ease;
+}
+.btn-navy:hover {
+  background-color: #1E293B;
+}
+
+.btn-white {
+  background-color: #FFFFFF;
+  color: #0F172A;
+  transition: opacity 0.2s ease;
+}
+.btn-white:hover {
+  opacity: 0.9;
+}
+
+/* ===== サービスカード ===== */
+
+.service-card-side {
+  background-color: #FDFBF7;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+}
+
+/* ===== フッターリンク ===== */
+
+.footer-link {
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s ease;
+}
+.footer-link:hover {
+  color: #FFFFFF;
+}
+
+.footer-link-dim {
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.2s ease;
+}
+.footer-link-dim:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ===== ハンバーガーアニメーション ===== */
+
+.hamburger-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.2s ease;
+}
+
+/* ===== ページロードアニメーション ===== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lineExpand {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes menuSlideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up   { animation: fadeInUp    0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-in      { animation: fadeIn      0.5s ease both; }
+.animate-line         { animation: lineExpand  0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-in-left{ animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.menu-slide-down      { animation: menuSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* 遅延ユーティリティ */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-line,
+  .animate-slide-in-left,
+  .menu-slide-down {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .hamburger-bar {
+    transition: none;
+  }
+}
