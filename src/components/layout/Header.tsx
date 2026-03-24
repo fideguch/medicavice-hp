@@ -58,7 +58,7 @@ const detectTheme = (): Theme => {
 
 export default function Header() {
   const pathname = usePathname()
-  const [theme, setTheme] = useState<Theme>('dark')
+  const [theme, setTheme] = useState<Theme>('light')
   const [menuOpen, setMenuOpen] = useState(false)
 
   const isActive = (href: string) =>
