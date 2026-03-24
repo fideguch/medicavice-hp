@@ -16,7 +16,7 @@ export default function CompanyHero() {
             <h1
               className="mb-8 animate-fade-in-up delay-200"
               style={{
-                fontSize: 'clamp(2.2rem, 5vw, 3.25rem)',
+                fontSize: 'clamp(1.75rem, 5vw, 3.25rem)',
                 fontWeight: 700,
                 letterSpacing: '-0.03em',
                 lineHeight: 1.1,
