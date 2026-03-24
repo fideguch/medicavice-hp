@@ -16,15 +16,18 @@ export default function CompanyHero() {
             <h1
               className="mb-8 animate-fade-in-up delay-200"
               style={{
-                fontSize: 'clamp(1.75rem, 5vw, 3.25rem)',
+                fontSize: 'clamp(1.5rem, 4.5vw, 3.25rem)',
                 fontWeight: 700,
                 letterSpacing: '-0.03em',
-                lineHeight: 1.1,
+                lineHeight: 1.3,
                 color: '#FFFFFF',
                 maxWidth: '36rem',
               }}
             >
-              医師としての知識と経験を、<br />
+              医師としての
+              <br />
+              知識と経験を、
+              <br />
               社会の課題解決へ。
             </h1>
             <div
