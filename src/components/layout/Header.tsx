@@ -188,7 +188,7 @@ export default function Header() {
         {/* モバイルメニュー — absolute でボディを押し下げない */}
         {menuOpen && (
           <nav
-            className="md:hidden absolute left-0 right-0 px-6 py-4 flex flex-col gap-2 menu-slide-down"
+            className="md:hidden absolute left-0 right-0 px-6 py-6 flex flex-col items-center gap-1 menu-slide-down"
             style={{
               top: '100%',
               backgroundColor: t.bg,
@@ -204,7 +204,7 @@ export default function Header() {
                 <span
                   key={href}
                   aria-current="page"
-                  className="min-h-[44px] flex items-center gap-2 text-sm"
+                  className="min-h-[48px] w-full flex items-center justify-center gap-2 text-sm"
                   style={{ color: t.navActive, fontWeight: 600, cursor: 'default' }}
                 >
                   <span
@@ -219,7 +219,7 @@ export default function Header() {
                   key={href}
                   href={href}
                   onClick={closeMenu}
-                  className={`min-h-[44px] flex items-center text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 ${t.ring}`}
+                  className={`min-h-[48px] w-full flex items-center justify-center text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 ${t.ring}`}
                   style={{ color: t.navInactive, fontWeight: 400 }}
                 >
                   {label}
@@ -229,7 +229,7 @@ export default function Header() {
             <Link
               href="/contact"
               onClick={closeMenu}
-              className={`min-h-[44px] flex items-center justify-center text-sm font-medium mt-2 transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
+              className={`min-h-[48px] w-full flex items-center justify-center text-sm font-medium mt-3 transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
               style={{ backgroundColor: t.ctaBg, color: t.ctaColor }}
             >
               お問い合わせ
