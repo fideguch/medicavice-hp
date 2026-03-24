@@ -71,9 +71,12 @@ export default function Header() {
     setTheme(detectTheme())
   }, [pathname])
 
-  // スクロール連動検出
+  // スクロール連動検出 + スクロール時にメニューを閉じる
   useEffect(() => {
-    const onScroll = () => setTheme(detectTheme())
+    const onScroll = () => {
+      setTheme(detectTheme())
+      setMenuOpen(false)
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -84,6 +87,15 @@ export default function Header() {
   const t = THEMES[theme]
 
   return (
+    <>
+    {/* メニュー展開時のバックドロップ — メニュー外タップで閉じる */}
+    {menuOpen && (
+      <div
+        className="fixed inset-0 z-40 md:hidden"
+        aria-hidden="true"
+        onClick={() => setMenuOpen(false)}
+      />
+    )}
     <header
       className="sticky top-0 z-50"
       style={{
@@ -244,5 +256,6 @@ export default function Header() {
         </nav>
       )}
     </header>
+    </>
   )
 }

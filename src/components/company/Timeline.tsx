@@ -1,12 +1,12 @@
 import SectionWrapper from '@/components/ui/SectionWrapper'
 
 const milestones = [
-  { date: '平成8年3月',   era: '平成',  event: '山口大学医学部 卒業' },
-  { date: '平成15年',     era: '平成',  event: '京都大学大学院医学研究科 脳神経外科で再生医療研究' },
-  { date: '平成16年9月',  era: '平成',  event: 'スタンフォード大学 2年3か月留学' },
-  { date: '平成18年11月', era: '平成',  event: '山口大学医学部附属病院 脳神経外科 助教' },
-  { date: '令和2年6月',   era: '令和',  event: '五反田リハビリテーション病院勤務' },
-  { date: '令和6年10月',  era: '令和',  event: '株式会社メディカバイス創業', highlight: true },
+  { date: '8年3月',   era: '平成',  event: '山口大学医学部 卒業' },
+  { date: '15年',     era: '平成',  event: '京都大学大学院医学研究科 脳神経外科で再生医療研究' },
+  { date: '16年9月',  era: '平成',  event: 'スタンフォード大学 2年3か月留学' },
+  { date: '18年11月', era: '平成',  event: '山口大学医学部附属病院 脳神経外科 助教' },
+  { date: '2年6月',   era: '令和',  event: '五反田リハビリテーション病院勤務' },
+  { date: '6年10月',  era: '令和',  event: '株式会社メディカバイス創業', highlight: true },
 ]
 
 export default function Timeline() {
