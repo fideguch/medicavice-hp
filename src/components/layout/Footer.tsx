@@ -74,22 +74,22 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start">
             <Link
               href="/"
-              className="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
+              className="flex flex-col items-center md:items-start gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
               aria-label="株式会社メディカバイス — トップページへ"
             >
               <img
                 src="/logo.png"
                 alt=""
                 aria-hidden="true"
-                width={24}
-                height={24}
+                width={80}
+                height={80}
                 style={{ filter: 'brightness(0) invert(1)', flexShrink: 0, objectFit: 'contain' }}
               />
-              <p style={{ fontSize: '15px', fontWeight: 700, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
+              <p style={{ fontSize: '20px', fontWeight: 700, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
                 株式会社メディカバイス
               </p>
             </Link>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)', marginTop: '8px', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', marginTop: '10px', lineHeight: 1.6 }}>
               現場に寄り添う、確かな医療を。
             </p>
           </div>

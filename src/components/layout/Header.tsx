@@ -39,7 +39,7 @@ const THEMES = {
   },
 } as const
 
-const HEADER_H = 64
+const HEADER_H = 80
 const SCROLL_THRESHOLD = 10
 
 function detectTheme(): Theme {
@@ -108,7 +108,7 @@ export default function Header() {
         }}
       >
         {/* ヘッダーバー */}
-        <div className="relative max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="relative max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link
             href="/"
             className={`flex items-center gap-2.5 hover:opacity-75 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
@@ -118,8 +118,8 @@ export default function Header() {
               src="/logo.png"
               alt=""
               aria-hidden="true"
-              width={32}
-              height={32}
+              width={56}
+              height={56}
               style={{
                 filter: theme === 'dark' ? 'brightness(0) invert(1)' : 'none',
                 transition: 'filter 0.4s ease',
@@ -129,7 +129,7 @@ export default function Header() {
             />
             <span
               className="font-bold tracking-tight"
-              style={{ color: t.logo, fontSize: '17px', transition: 'color 0.4s ease' }}
+              style={{ color: t.logo, fontSize: '14px', transition: 'color 0.4s ease' }}
             >
               株式会社メディカバイス
             </span>
