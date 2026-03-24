@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState, useEffect, useLayoutEffect } from 'react'
+import { useState, useEffect, useLayoutEffect, useCallback } from 'react'
 
 const NAV_LINKS = [
   { href: '/', label: 'トップ' },
@@ -12,8 +12,6 @@ const NAV_LINKS = [
 
 type Theme = 'dark' | 'light'
 
-// dark: ネイビー背景・白テキスト（ライトセクション上）
-// light: アイボリー背景・ネイビーテキスト（ダークセクション上）
 const THEMES = {
   dark: {
     bg: 'rgba(15, 23, 42, 0.88)',
@@ -42,16 +40,14 @@ const THEMES = {
 } as const
 
 const HEADER_H = 64
-// サブピクセル誤差 + ページ最上端の余裕を持たせる
-const DETECTION_MARGIN = 4
+const SCROLL_THRESHOLD = 10
 
-const detectTheme = (): Theme => {
-  // オーバースクロール（ゴムバンド引っ張り）時はlightを維持してチカチカ防止
+function detectTheme(): Theme {
   if (window.scrollY < 0) return 'light'
   const sections = document.querySelectorAll<HTMLElement>('[data-section-bg]')
   for (const el of sections) {
     const { top, bottom } = el.getBoundingClientRect()
-    if (top <= HEADER_H + DETECTION_MARGIN && bottom > 0) {
+    if (top <= HEADER_H + 4 && bottom > 0) {
       return el.dataset.sectionBg === 'dark' ? 'light' : 'dark'
     }
   }
@@ -62,14 +58,13 @@ export default function Header() {
   const pathname = usePathname()
   const [theme, setTheme] = useState<Theme>('light')
   const [menuOpen, setMenuOpen] = useState(false)
+  const closeMenu = useCallback(() => setMenuOpen(false), [])
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href)
 
-  // useLayoutEffect でDOMコミット直後に同期検出（フラッシュ防止）
-  useLayoutEffect(() => {
-    setTheme(detectTheme())
-  }, [pathname])
+  useLayoutEffect(() => setTheme(detectTheme()), [pathname])
+  useEffect(closeMenu, [pathname, closeMenu])
 
   // スクロール連動テーマ検出
   useEffect(() => {
@@ -78,192 +73,170 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // メニュー展開中のみ：意図的なスクロール（10px超）でメニューを閉じる
+  // メニュー展開中：意図的スクロール（10px超）で閉じる
   useEffect(() => {
     if (!menuOpen) return
     const startY = window.scrollY
     const onScroll = () => {
-      if (Math.abs(window.scrollY - startY) > 10) setMenuOpen(false)
+      if (Math.abs(window.scrollY - startY) > SCROLL_THRESHOLD) setMenuOpen(false)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [menuOpen])
 
-  // ルート変更時にメニューを閉じる
-  useEffect(() => { setMenuOpen(false) }, [pathname])
-
   const t = THEMES[theme]
 
   return (
     <>
-    {/* メニュー展開時のバックドロップ — メニュー外タップで閉じる */}
-    {menuOpen && (
-      <div
-        className="fixed inset-0 z-40 md:hidden"
-        aria-hidden="true"
-        onClick={() => setMenuOpen(false)}
-      />
-    )}
-    <header
-      className="sticky top-0 z-50"
-      style={{
-        backgroundColor: t.bg,
-        borderBottom: `1px solid ${t.border}`,
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        transition: 'background-color 0.4s ease, border-color 0.4s ease',
-      }}
-    >
-      <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      {/* バックドロップ（メニュー外タップで閉じる） */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-40 md:hidden"
+          aria-hidden="true"
+          onClick={closeMenu}
+        />
+      )}
 
-        {/* ロゴ */}
-        <Link
-          href="/"
-          className={`flex items-center gap-2.5 hover:opacity-75 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
-          aria-label="株式会社メディカバイス — トップページへ"
-        >
-          {/* 企業ロゴ */}
-          <img
-            src="/logo.png"
-            alt=""
-            aria-hidden="true"
-            width={32}
-            height={32}
-            style={{
-              filter: theme === 'dark' ? 'brightness(0) invert(1)' : 'none',
-              transition: 'filter 0.4s ease',
-              flexShrink: 0,
-              objectFit: 'contain',
-            }}
-          />
-          <span
-            className="font-bold tracking-tight"
-            style={{ color: t.logo, fontSize: '17px', transition: 'color 0.4s ease' }}
-          >
-            株式会社メディカバイス
-          </span>
-        </Link>
-
-        {/* デスクトップナビ */}
-        <nav className="hidden md:flex items-center gap-8" aria-label="グローバルナビゲーション">
-          {NAV_LINKS.map(({ href, label }) => {
-            const active = isActive(href)
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={`text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
-                style={{
-                  color: active ? t.navActive : t.navInactive,
-                  fontWeight: active ? 600 : 400,
-                  borderBottom: active ? `1px solid ${t.navActiveBorder}` : undefined,
-                  paddingBottom: active ? '2px' : undefined,
-                  transition: 'color 0.4s ease',
-                }}
-              >
-                {label}
-              </Link>
-            )
-          })}
+      <header
+        className="sticky top-0 z-50"
+        style={{
+          backgroundColor: t.bg,
+          borderBottom: `1px solid ${t.border}`,
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          transition: 'background-color 0.4s ease, border-color 0.4s ease',
+        }}
+      >
+        {/* ヘッダーバー */}
+        <div className="relative max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link
-            href="/contact"
-            className={`min-h-[44px] px-5 flex items-center text-sm font-medium transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
-            style={{
-              backgroundColor: t.ctaBg,
-              color: t.ctaColor,
-              transition: 'background-color 0.4s ease, color 0.4s ease',
-            }}
+            href="/"
+            className={`flex items-center gap-2.5 hover:opacity-75 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
+            aria-label="株式会社メディカバイス — トップページへ"
           >
-            お問い合わせ
-          </Link>
-        </nav>
-
-        {/* ハンバーガーボタン（SP） */}
-        <button
-          className={`md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
-          style={{ color: t.icon, transition: 'color 0.4s ease' }}
-          onClick={() => setMenuOpen(v => !v)}
-          aria-label={menuOpen ? 'メニューを閉じる' : 'メニューを開く'}
-          aria-expanded={menuOpen}
-        >
-          <span className="flex flex-col gap-[5px]" aria-hidden="true">
-            <span
-              className="hamburger-bar"
-              style={{ transform: menuOpen ? 'translateY(7px) rotate(45deg)' : undefined }}
-            />
-            <span
-              className="hamburger-bar"
+            <img
+              src="/logo.png"
+              alt=""
+              aria-hidden="true"
+              width={32}
+              height={32}
               style={{
-                opacity: menuOpen ? 0 : 1,
-                transform: menuOpen ? 'scaleX(0)' : undefined,
+                filter: theme === 'dark' ? 'brightness(0) invert(1)' : 'none',
+                transition: 'filter 0.4s ease',
+                flexShrink: 0,
+                objectFit: 'contain',
               }}
             />
             <span
-              className="hamburger-bar"
-              style={{ transform: menuOpen ? 'translateY(-7px) rotate(-45deg)' : undefined }}
-            />
-          </span>
-        </button>
-      </div>
-
-      {/* モバイルメニュー */}
-      {menuOpen && (
-        <nav
-          className="md:hidden px-6 py-4 flex flex-col gap-2 menu-slide-down"
-          style={{
-            backgroundColor: t.bg,
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            borderTop: `1px solid ${t.border}`,
-          }}
-          aria-label="モバイルナビゲーション"
-        >
-          {NAV_LINKS.map(({ href, label }) => {
-            const active = isActive(href)
-            return active ? (
-              <span
-                key={href}
-                aria-current="page"
-                className="min-h-[44px] flex items-center gap-2 text-sm"
-                style={{ color: t.navActive, fontWeight: 600, cursor: 'default' }}
-              >
-                <span
-                  aria-hidden="true"
-                  style={{
-                    display: 'inline-block',
-                    width: '4px',
-                    height: '4px',
-                    borderRadius: '50%',
-                    backgroundColor: 'currentColor',
-                    flexShrink: 0,
-                    opacity: 0.5,
-                  }}
-                />
-                {label}
-              </span>
-            ) : (
-              <Link
-                key={href}
-                href={href}
-                onClick={() => setMenuOpen(false)}
-                className={`min-h-[44px] flex items-center text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 ${t.ring}`}
-                style={{ color: t.navInactive, fontWeight: 400 }}
-              >
-                {label}
-              </Link>
-            )
-          })}
-          <Link
-            href="/contact"
-            onClick={() => setMenuOpen(false)}
-            className={`min-h-[44px] flex items-center justify-center text-sm font-medium mt-2 transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
-            style={{ backgroundColor: t.ctaBg, color: t.ctaColor }}
-          >
-            お問い合わせ
+              className="font-bold tracking-tight"
+              style={{ color: t.logo, fontSize: '17px', transition: 'color 0.4s ease' }}
+            >
+              株式会社メディカバイス
+            </span>
           </Link>
-        </nav>
-      )}
-    </header>
+
+          {/* デスクトップナビ */}
+          <nav className="hidden md:flex items-center gap-8" aria-label="グローバルナビゲーション">
+            {NAV_LINKS.map(({ href, label }) => {
+              const active = isActive(href)
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
+                  style={{
+                    color: active ? t.navActive : t.navInactive,
+                    fontWeight: active ? 600 : 400,
+                    borderBottom: active ? `1px solid ${t.navActiveBorder}` : undefined,
+                    paddingBottom: active ? '2px' : undefined,
+                    transition: 'color 0.4s ease',
+                  }}
+                >
+                  {label}
+                </Link>
+              )
+            })}
+            <Link
+              href="/contact"
+              className={`min-h-[44px] px-5 flex items-center text-sm font-medium transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
+              style={{
+                backgroundColor: t.ctaBg,
+                color: t.ctaColor,
+                transition: 'background-color 0.4s ease, color 0.4s ease',
+              }}
+            >
+              お問い合わせ
+            </Link>
+          </nav>
+
+          {/* ハンバーガーボタン（SP） */}
+          <button
+            className={`md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
+            style={{ color: t.icon, transition: 'color 0.4s ease' }}
+            onClick={() => setMenuOpen(v => !v)}
+            aria-label={menuOpen ? 'メニューを閉じる' : 'メニューを開く'}
+            aria-expanded={menuOpen}
+          >
+            <span className="flex flex-col gap-[5px]" aria-hidden="true">
+              <span className="hamburger-bar" style={{ transform: menuOpen ? 'translateY(7px) rotate(45deg)' : undefined }} />
+              <span className="hamburger-bar" style={{ opacity: menuOpen ? 0 : 1, transform: menuOpen ? 'scaleX(0)' : undefined }} />
+              <span className="hamburger-bar" style={{ transform: menuOpen ? 'translateY(-7px) rotate(-45deg)' : undefined }} />
+            </span>
+          </button>
+        </div>
+
+        {/* モバイルメニュー — absolute でボディを押し下げない */}
+        {menuOpen && (
+          <nav
+            className="md:hidden absolute left-0 right-0 px-6 py-4 flex flex-col gap-2 menu-slide-down"
+            style={{
+              top: '100%',
+              backgroundColor: t.bg,
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              borderTop: `1px solid ${t.border}`,
+            }}
+            aria-label="モバイルナビゲーション"
+          >
+            {NAV_LINKS.map(({ href, label }) => {
+              const active = isActive(href)
+              return active ? (
+                <span
+                  key={href}
+                  aria-current="page"
+                  className="min-h-[44px] flex items-center gap-2 text-sm"
+                  style={{ color: t.navActive, fontWeight: 600, cursor: 'default' }}
+                >
+                  <span
+                    aria-hidden="true"
+                    className="inline-block w-1 h-1 rounded-full shrink-0 opacity-50"
+                    style={{ backgroundColor: 'currentColor' }}
+                  />
+                  {label}
+                </span>
+              ) : (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={closeMenu}
+                  className={`min-h-[44px] flex items-center text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 ${t.ring}`}
+                  style={{ color: t.navInactive, fontWeight: 400 }}
+                >
+                  {label}
+                </Link>
+              )
+            })}
+            <Link
+              href="/contact"
+              onClick={closeMenu}
+              className={`min-h-[44px] flex items-center justify-center text-sm font-medium mt-2 transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
+              style={{ backgroundColor: t.ctaBg, color: t.ctaColor }}
+            >
+              お問い合わせ
+            </Link>
+          </nav>
+        )}
+      </header>
     </>
   )
 }
