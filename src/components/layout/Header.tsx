@@ -46,6 +46,8 @@ const HEADER_H = 64
 const DETECTION_MARGIN = 4
 
 const detectTheme = (): Theme => {
+  // オーバースクロール（ゴムバンド引っ張り）時はlightを維持してチカチカ防止
+  if (window.scrollY < 0) return 'light'
   const sections = document.querySelectorAll<HTMLElement>('[data-section-bg]')
   for (const el of sections) {
     const { top, bottom } = el.getBoundingClientRect()
@@ -53,7 +55,7 @@ const detectTheme = (): Theme => {
       return el.dataset.sectionBg === 'dark' ? 'light' : 'dark'
     }
   }
-  return 'dark'
+  return 'light'
 }
 
 export default function Header() {
