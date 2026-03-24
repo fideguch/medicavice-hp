@@ -42,6 +42,9 @@ yarn-error.log*
 # claude settings
 .claude/
 
+# markdown docs (CLAUDE.md, DESIGN.md, PRD.md etc.)
+*.md
+
 # test screenshots (root level only)
 /*.png
 /*.jpg
