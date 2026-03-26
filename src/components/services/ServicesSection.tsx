@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import SectionWrapper from '@/components/ui/SectionWrapper'
 
 const services = [
@@ -20,6 +21,7 @@ const services = [
     description: '場所を選ばず、専門医による質の高い美容医療をオンラインで提供します。',
     featured: false,
     image: '/online_beauty.png',
+    href: '/services/pochimedi',
   },
   {
     id: 3,
@@ -120,10 +122,25 @@ export default function ServicesSection() {
             {/* 右: タイトル+説明 */}
             <div className="flex-1 flex flex-col sm:flex-row sm:items-baseline sm:gap-8">
               <h3 className="text-sm font-semibold shrink-0 sm:w-52 mb-1 sm:mb-0" style={{ color: '#1E293B' }}>
-                {service.title}
+                {service.href ? (
+                  <Link href={service.href} className="underline hover:opacity-70 transition-opacity">
+                    {service.title}
+                  </Link>
+                ) : (
+                  service.title
+                )}
               </h3>
               <p className="text-sm leading-loose" style={{ color: '#64748B' }}>
                 {service.description}
+                {service.href && (
+                  <Link
+                    href={service.href}
+                    className="inline-block ml-2 text-xs font-medium px-3 py-1 rounded"
+                    style={{ backgroundColor: '#0F172A', color: '#FFFFFF' }}
+                  >
+                    パンフレットを見る →
+                  </Link>
+                )}
               </p>
             </div>
           </div>
