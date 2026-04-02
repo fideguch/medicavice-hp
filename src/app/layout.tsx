@@ -4,16 +4,14 @@ import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ScrollToTop from '@/components/ui/ScrollToTop'
+import JsonLd from '@/components/seo/JsonLd'
+import { siteUrl } from '@/lib/site-config'
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
   display: 'swap',
 })
-
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -67,6 +65,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#FDFBF7" />
       </head>
       <body className={notoSansJP.className}>
+        <JsonLd />
         {/* スキップリンク */}
         <a
           href="#main-content"
