@@ -63,6 +63,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="theme-color" content="#FDFBF7" />
+        <meta name="google-site-verification" content="ZyUbXcVPuUsk7xIG24Lo7VzlttNp9xRA0V7KGmGECh0" />
       </head>
       <body className={notoSansJP.className}>
         <JsonLd />
