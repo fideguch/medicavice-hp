@@ -39,7 +39,16 @@ export async function submitContact(
     }
   }
 
-  const gmailUser = process.env.GMAIL_USER!
+  const gmailUser = process.env.GMAIL_USER
+  const gmailPass = process.env.GMAIL_APP_PASSWORD
+  if (!gmailUser || !gmailPass) {
+    console.error('[Contact] Missing env: GMAIL_USER or GMAIL_APP_PASSWORD')
+    return {
+      success: false,
+      message: '送信設定が不完全です。管理者にご連絡ください。',
+    }
+  }
+
   const toEmails = (process.env.CONTACT_TO_EMAILS ?? '')
     .split(',')
     .map((e) => e.trim())
@@ -49,7 +58,7 @@ export async function submitContact(
     service: 'gmail',
     auth: {
       user: gmailUser,
-      pass: process.env.GMAIL_APP_PASSWORD,
+      pass: gmailPass,
     },
   })
 
