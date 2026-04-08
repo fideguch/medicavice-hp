@@ -16,6 +16,7 @@ const services = [
     title: '美容医療オンライン診療',
     description: '場所を問わず、専門医による質の高い美容医療をオンラインで提供します。',
     image: '/online_beauty.png',
+    link: '/services/beauty',
   },
   {
     number: '03',
@@ -89,11 +90,11 @@ export default function ServicePreview() {
                   {service.description}
                 </p>
                 <Link
-                  href="/services"
+                  href={'link' in service && service.link ? service.link : '/services'}
                   className="inline-flex items-center gap-1.5 text-sm font-medium group cursor-pointer"
                   style={{ color: '#1E293B' }}
                 >
-                  詳細を見る
+                  {'link' in service && service.link ? '診療内容を確認する' : '詳細を見る'}
                   <ArrowRight size={13} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </div>

@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import SectionWrapper from '@/components/ui/SectionWrapper'
 
 const services = [
@@ -20,6 +22,7 @@ const services = [
     description: '場所を選ばず、専門医による質の高い美容医療をオンラインで提供します。',
     featured: false,
     image: '/online_beauty.png',
+    link: '/services/beauty',
   },
   {
     id: 3,
@@ -122,9 +125,21 @@ export default function ServicesSection() {
               <h3 className="text-sm font-semibold shrink-0 sm:w-52 mb-1 sm:mb-0" style={{ color: '#1E293B' }}>
                 {service.title}
               </h3>
-              <p className="text-sm leading-loose" style={{ color: '#64748B' }}>
-                {service.description}
-              </p>
+              <div className="flex-1">
+                <p className="text-sm leading-loose" style={{ color: '#64748B' }}>
+                  {service.description}
+                </p>
+                {'link' in service && service.link && (
+                  <Link
+                    href={service.link}
+                    className="inline-flex items-center gap-1.5 text-sm font-medium mt-3 group cursor-pointer"
+                    style={{ color: '#1E293B' }}
+                  >
+                    診療内容を確認する
+                    <ArrowRight size={13} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         ))}
