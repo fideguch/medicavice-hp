@@ -11,6 +11,7 @@ export const SOCIAL = {
 }
 
 export const MEDIMONY_URL = 'https://www.medimony.co.jp/'
+export const WAWATALK_URL = 'https://www.medimony.co.jp/wawatalk/'
 
 /** Service metadata (number + tag). Titles / details are in dict.services.items. */
 export interface Service {
