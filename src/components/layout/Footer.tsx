@@ -15,7 +15,7 @@ const FOOTER_NAV = [
 ] as const
 
 export default function Footer() {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const fo = t.footer
   const muted = 'var(--color-text-muted)'
 
@@ -26,7 +26,7 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start">
             <Link href="/" className="flex items-center gap-2.5 focus-ring" aria-label={fo.homeAria}>
               <LogoMark style={{ height: 24, width: 'auto', color: 'var(--color-text)', flexShrink: 0 }} />
-              <span style={{ fontSize: '16px', fontWeight: 700, color: 'var(--color-text)', letterSpacing: '-0.01em' }}>{fo.companyName}</span>
+              <span style={{ fontSize: '17px', fontWeight: 700, color: 'var(--color-text)', letterSpacing: locale === 'en' ? '-0.01em' : '0', fontFamily: locale === 'en' ? 'var(--font-outfit), sans-serif' : 'var(--font-zen-kaku), sans-serif' }}>{fo.companyName}</span>
             </Link>
             <SocialLinks className="mt-3 -ml-2" size={17} />
           </div>

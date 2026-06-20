@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Noto_Sans_JP, JetBrains_Mono, Zen_Kaku_Gothic_New, Space_Grotesk } from 'next/font/google'
+import { Inter, Noto_Sans_JP, JetBrains_Mono, Zen_Kaku_Gothic_New, Space_Grotesk, Outfit } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -45,6 +45,14 @@ const spaceGrotesk = Space_Grotesk({
   display: 'swap',
 })
 
+// EN company wordmark (medicavice) — pairs with the Outfit MV logo mark
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  variable: '--font-outfit',
+  display: 'swap',
+})
+
 const DESCRIPTION =
   '受託でのプロダクト開発のディレクションから、AI活用・業務自動化（DX）まで。企画から運用まで一気通貫で支援します。医療領域のご相談にも対応します。'
 
@@ -86,7 +94,7 @@ export default function RootLayout({
         <meta name="google-site-verification" content="ZyUbXcVPuUsk7xIG24Lo7VzlttNp9xRA0V7KGmGECh0" />
       </head>
       <body
-        className={`${inter.variable} ${notoSansJP.variable} ${jetbrainsMono.variable} ${zenKaku.variable} ${spaceGrotesk.variable}`}
+        className={`${inter.variable} ${notoSansJP.variable} ${jetbrainsMono.variable} ${zenKaku.variable} ${spaceGrotesk.variable} ${outfit.variable}`}
       >
         <LocaleProvider>
           <JsonLd />

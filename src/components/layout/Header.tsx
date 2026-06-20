@@ -14,7 +14,7 @@ const NAV = [
 const SCROLL_THRESHOLD = 10
 
 export default function Header() {
-  const { t, toggle } = useLocale()
+  const { t, toggle, locale } = useLocale()
   const [menuOpen, setMenuOpen] = useState(false)
   const closeMenu = useCallback(() => setMenuOpen(false), [])
 
@@ -55,7 +55,7 @@ export default function Header() {
         <div className="relative max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-75 transition-opacity focus-ring" aria-label={t.ui.logoHomeAria}>
             <LogoMark style={{ height: 22, width: 'auto', color: 'var(--color-text)', flexShrink: 0 }} />
-            <span className="mono" style={{ color: 'var(--color-text)', fontSize: '13px', fontWeight: 500, letterSpacing: '0.01em' }}>{t.ui.logoText}</span>
+            <span style={{ color: 'var(--color-text)', fontSize: '15px', fontWeight: 600, letterSpacing: locale === 'en' ? '-0.01em' : '0.03em', fontFamily: locale === 'en' ? 'var(--font-outfit), sans-serif' : 'var(--font-zen-kaku), sans-serif' }}>{t.ui.logoText}</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-7" aria-label={t.ui.globalNavAria}>
