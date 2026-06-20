@@ -110,7 +110,7 @@ export const dict = {
     history: {
       it: [
         { period: '2024.6 – 現在', title: '株式会社メディカバイス｜取締役', sub: 'プロダクトマネジメント・開発ディレクション・AI/DX。業務委託やサービス開発。' },
-        { period: '2025.6 – 2026.3', title: 'A2Zホールディングス｜プロダクトマネージャー / 開発ディレクター', sub: 'toCマッチングアプリ（2025年3月リリース）のPdM。事業設計・バックログ運用・要件定義・効果検証。' },
+        { period: '2025.6 – 2026.3', title: 'toCマッチングアプリ｜プロダクトマネージャー / 開発ディレクター', sub: '2025年3月リリースのサービスでPdMを担当。事業設計・バックログ運用・要件定義・効果検証。' },
         { period: '2023.2 – 2024.6', title: '株式会社Enginee｜CPO', sub: 'プロダクト責任者として EngineeBase を2023年8月にリリース。' },
         { period: '2021.9 – 2023.3', title: 'ディップ株式会社｜プロダクトマネージャー', sub: 'dip Robotics で社内向けCRMの施策ディレクション・要件定義・効果検証。' },
         { period: '2020.11 – 2023.2', title: 'Talknote株式会社｜プロジェクトマネージャー', sub: '組織活性化SaaS。データ基盤（DWH）構築・業務改善。' },
@@ -323,7 +323,7 @@ export const dict = {
     history: {
       it: [
         { period: 'Jun 2024 – Present', title: 'Medicavice Inc. | Director', sub: 'Product management, development direction, and AI/DX — across contract work and in-house product development.' },
-        { period: 'Jun 2025 – Mar 2026', title: 'A2Z Holdings | Product Manager / Development Director', sub: 'PdM for a consumer matching app (launched March 2025): business design, backlog operations, requirements, and impact measurement.' },
+        { period: 'Jun 2025 – Mar 2026', title: 'Consumer matching app | Product Manager / Development Director', sub: 'PdM for a service launched March 2025: business design, backlog operations, requirements, and impact measurement.' },
         { period: 'Feb 2023 – Jun 2024', title: 'Enginee Inc. | CPO', sub: 'As head of product, launched EngineeBase in August 2023.' },
         { period: 'Sep 2021 – Mar 2023', title: 'Dip Corporation | Product Manager', sub: 'At dip Robotics, led initiative direction, requirements, and impact measurement for an internal CRM.' },
         { period: 'Nov 2020 – Feb 2023', title: 'Talknote Inc. | Project Manager', sub: 'Team-engagement SaaS. Built the data warehouse (DWH) and drove operational improvements.' },
