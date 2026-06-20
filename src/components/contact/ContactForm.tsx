@@ -72,10 +72,10 @@ export default function ContactForm() {
           aria-live="polite"
           role="status"
           className="fixed top-20 right-4 left-4 sm:left-auto z-50 flex items-start gap-3 max-w-sm w-auto sm:w-full p-4 rounded-lg text-sm"
-          style={{ backgroundColor: 'var(--color-surface-3)', border: `1px solid ${state.success ? 'var(--color-accent)' : 'var(--color-error)'}`, color: 'var(--color-text)' }}
+          style={{ backgroundColor: 'var(--color-surface-3)', border: `1px solid ${state.success ? 'var(--color-accent-text)' : 'var(--color-error)'}`, color: 'var(--color-text)' }}
         >
           {state.success ? (
-            <CheckCircle size={18} aria-hidden="true" className="shrink-0 mt-0.5" style={{ color: 'var(--color-accent)' }} />
+            <CheckCircle size={18} aria-hidden="true" className="shrink-0 mt-0.5" style={{ color: 'var(--color-accent-text)' }} />
           ) : (
             <AlertCircle size={18} aria-hidden="true" className="shrink-0 mt-0.5" style={{ color: 'var(--color-error)' }} />
           )}

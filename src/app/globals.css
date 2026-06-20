@@ -3,7 +3,7 @@
 /* =========================================================================
    DESIGN SYSTEM v2 — Dark / AI-IT
    Single source of truth: ../../DESIGN.md
-   有彩色アクセントは #3B82F6 の1色のみ。深度は サーフェス階調 + 半透明白罫 + glow。
+   ブランド有彩色はネイビー #00489d（塗り/ブランド）。暗背景のテキスト/リンクは #4187e0 (--color-accent-text, WCAG AA)。
    ========================================================================= */
 
 @theme {
@@ -25,11 +25,12 @@
   --color-text-muted: #9BA1AC;
   --color-text-dim: #5C6370;
 
-  /* accent — the single chromatic */
-  --color-accent: #3B82F6;
-  --color-accent-hover: #5E9CFF;
-  --color-accent-soft: rgba(59, 130, 246, 0.15);
-  --color-accent-dim: rgba(59, 130, 246, 0.08);
+  /* accent — navy brand #00489d (fills/brand) + dark-UI text tint (#4187e0, WCAG AA) */
+  --color-accent: #00489d;
+  --color-accent-hover: #0a5cc4;
+  --color-accent-text: #4187e0;
+  --color-accent-soft: rgba(65, 135, 224, 0.26);
+  --color-accent-dim: rgba(0, 72, 157, 0.16);
 
   /* voltage — glow only */
   --color-voltage-cyan: #22D3EE;
@@ -113,7 +114,7 @@ p { text-wrap: pretty; }
 
 /* gradient keyword (use on a single word only) */
 .text-gradient {
-  background: linear-gradient(90deg, var(--color-accent), var(--color-voltage-violet));
+  background: linear-gradient(90deg, var(--color-accent-text), var(--color-voltage-violet));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -146,7 +147,7 @@ p { text-wrap: pretty; }
 }
 .btn-accent:hover {
   background-color: var(--color-accent-hover);
-  box-shadow: 0 0 0 1px var(--color-accent-dim), 0 8px 24px -8px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 1px var(--color-accent-dim), 0 8px 24px -8px rgba(0, 72, 157, 0.6);
 }
 .btn-ghost {
   background-color: transparent;
@@ -207,7 +208,7 @@ p { text-wrap: pretty; }
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .field::placeholder { color: var(--color-text-dim); }
-.field:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 0 4px var(--color-accent-soft); }
+.field:focus { outline: none; border-color: var(--color-accent-text); box-shadow: 0 0 0 4px var(--color-accent-soft); }
 .field-error { border-color: var(--color-error); }
 .field-error:focus { border-color: var(--color-error); box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.18); }
 textarea.field { min-height: auto; resize: vertical; line-height: 1.7; }
@@ -241,7 +242,7 @@ select.field {
   filter: blur(70px);
   opacity: 0.55;
   background:
-    radial-gradient(40% 50% at 35% 40%, rgba(59, 130, 246, 0.45), transparent 70%),
+    radial-gradient(40% 50% at 35% 40%, rgba(65, 135, 224, 0.42), transparent 70%),
     radial-gradient(35% 45% at 65% 55%, rgba(139, 92, 246, 0.35), transparent 70%),
     radial-gradient(30% 40% at 50% 30%, rgba(34, 211, 238, 0.20), transparent 70%);
 }
@@ -333,7 +334,7 @@ select.field {
     height: 2px;
     width: 100%;
     transform-origin: 0 50%;
-    background: linear-gradient(90deg, var(--color-accent), var(--color-voltage-violet));
+    background: linear-gradient(90deg, var(--color-accent-text), var(--color-voltage-violet));
     z-index: 60;
     animation: scaleProgress linear both;
     animation-timeline: scroll(root);
@@ -375,7 +376,7 @@ select.field {
   pointer-events: none;
   opacity: 0;
   transition: opacity 220ms ease;
-  background: radial-gradient(180px circle at var(--mx, 50%) var(--my, 50%), rgba(59, 130, 246, 0.13), transparent 70%);
+  background: radial-gradient(180px circle at var(--mx, 50%) var(--my, 50%), rgba(65, 135, 224, 0.15), transparent 70%);
 }
 @media (hover: hover) and (pointer: fine) {
   .card:hover::before { opacity: 1; }

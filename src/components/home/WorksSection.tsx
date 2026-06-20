@@ -104,7 +104,7 @@ export default function WorksSection({ repos, contributions }: { repos: Repo[]; 
         )}
 
         <Reveal>
-          <a href={`https://github.com/${GH_USER}`} target="_blank" rel="noopener noreferrer" className="link-wipe inline-flex items-center gap-1.5 text-sm font-medium mt-9 focus-ring" style={{ color: 'var(--color-accent)' }}>
+          <a href={`https://github.com/${GH_USER}`} target="_blank" rel="noopener noreferrer" className="link-wipe inline-flex items-center gap-1.5 text-sm font-medium mt-9 focus-ring" style={{ color: 'var(--color-accent-text)' }}>
             {a.viewAllGithub}
             <ArrowUpRight size={14} aria-hidden="true" />
           </a>

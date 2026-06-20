@@ -24,7 +24,7 @@ export default function ContactSection() {
           </Reveal>
 
           <aside className="w-full md:w-64 shrink-0">
-            <div style={{ borderTop: '2px solid var(--color-accent)', paddingTop: '24px' }}>
+            <div style={{ borderTop: '2px solid var(--color-accent-text)', paddingTop: '24px' }}>
               <p className="eyebrow mb-5">{c.reassuranceEyebrow}</p>
               <ul className="flex flex-col gap-5">
                 {c.reassurance.map((item) => (

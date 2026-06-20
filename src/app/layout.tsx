@@ -46,17 +46,17 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 const DESCRIPTION =
-  '受託開発・技術コンサルティング・プロダクトマネジメントを軸に、AI・ITで事業を前へ。医療現場を知る技術者が、確かなソフトウェアと医療DXを提供します。'
+  '受託でのプロダクト開発のディレクションから、AI活用・業務自動化（DX）まで。企画から運用まで一気通貫で支援します。医療領域のご相談にも対応します。'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: '株式会社メディカバイス | 医療を知る、AI・ソフトウェア開発',
+    default: '株式会社メディカバイス｜企画から運用、AI活用・自動化まで',
     template: '%s | 株式会社メディカバイス',
   },
   description: DESCRIPTION,
   openGraph: {
-    title: '株式会社メディカバイス | 医療を知る、AI・ソフトウェア開発',
+    title: '株式会社メディカバイス｜企画から運用、AI活用・自動化まで',
     description: DESCRIPTION,
     url: siteUrl,
     siteName: '株式会社メディカバイス',
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '株式会社メディカバイス | 医療を知る、AI・ソフトウェア開発',
+    title: '株式会社メディカバイス｜企画から運用、AI活用・自動化まで',
     description: DESCRIPTION,
     images: ['/og-image.png'],
   },

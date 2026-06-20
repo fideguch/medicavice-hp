@@ -11,7 +11,7 @@ export default function NotFoundView() {
     <section className="relative overflow-hidden" style={{ backgroundColor: 'var(--color-bg)', minHeight: '70vh' }}>
       <BlueprintGrid />
       <div className="relative max-w-5xl mx-auto px-6 py-32 flex flex-col items-center justify-center text-center" style={{ minHeight: '70vh' }}>
-        <p className="num text-sm tracking-[0.3em] mb-6" style={{ color: 'var(--color-accent)' }}>{n.code}</p>
+        <p className="num text-sm tracking-[0.3em] mb-6" style={{ color: 'var(--color-accent-text)' }}>{n.code}</p>
         <h1 className="heading-section mb-5">{n.heading}</h1>
         <p className="text-muted text-sm leading-loose mb-12 max-w-md">{n.body}</p>
         <div className="flex flex-col sm:flex-row gap-3">

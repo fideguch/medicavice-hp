@@ -37,7 +37,7 @@ export default function PrivacyContent() {
                   <li>{p.contactAddress}</li>
                   <li>
                     TEL:{' '}
-                    <a href="tel:08075324086" className="underline underline-offset-4 transition-opacity hover:opacity-80 focus-ring" style={{ color: 'var(--color-accent)' }}>
+                    <a href="tel:08075324086" className="underline underline-offset-4 transition-opacity hover:opacity-80 focus-ring" style={{ color: 'var(--color-accent-text)' }}>
                       080-7532-4086
                     </a>
                   </li>

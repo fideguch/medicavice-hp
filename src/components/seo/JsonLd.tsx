@@ -34,7 +34,7 @@ interface WebSiteJsonLd {
 }
 
 const DESCRIPTION =
-  '受託開発・技術コンサルティング・プロダクトマネジメントを軸に、AI・ITで事業を支援。医療の現場知を持つ技術者集団として、確かなソフトウェアと医療DXを提供します。'
+  'プロダクトの企画・開発ディレクション、AI活用・業務自動化（DX）を中心に事業を支援。医療領域のご相談にも対応します。'
 
 const organizationData: OrganizationJsonLd = {
   '@context': 'https://schema.org',

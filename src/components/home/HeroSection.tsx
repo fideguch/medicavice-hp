@@ -57,7 +57,7 @@ export default function HeroSection() {
           </div>
 
           {/* right: role index + condensed career */}
-          <div className="lg:col-span-5 lg:mt-28 lg:pl-12 lg:border-l lg:border-[color:var(--color-border-hairline)] animate-blur-in delay-300">
+          <div className="lg:col-span-5 lg:self-center lg:pl-12 lg:border-l lg:border-[color:var(--color-border-hairline)] animate-blur-in delay-300">
             <ul className="flex flex-col gap-3.5">
               {INDEX_KEYS.map((n) => (
                 <li key={n}>
@@ -78,17 +78,17 @@ export default function HeroSection() {
               {career.map((c, i) => (
                 <li key={i}>
                   <span className="mono block text-[11px] mb-0.5" style={{ color: 'var(--color-text-dim)', letterSpacing: '0.03em' }}>{c.period}</span>
-                  <span className="text-sm leading-snug" style={{ color: 'var(--color-text-body)' }}>{c.title}</span>
+                  <span className="block text-sm leading-snug" style={{ color: 'var(--color-text-body)' }}>{c.title}</span>
                   {c.instagram && (
                     <a
                       href={c.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="Instagram — 6grams（武蔵小山）"
-                      className="inline-flex items-center gap-1 mt-1 text-[11px] transition-colors hover:text-[color:var(--color-text)] focus-ring"
+                      className="flex w-fit items-center gap-2 mt-2 text-[11px] transition-colors hover:text-[color:var(--color-accent-text)] focus-ring"
                       style={{ color: 'var(--color-text-muted)' }}
                     >
-                      <InstagramIcon size={13} />
+                      <InstagramIcon size={15} />
                       <span className="mono">@6grams_musashikoyama</span>
                     </a>
                   )}
@@ -96,7 +96,7 @@ export default function HeroSection() {
               ))}
             </ul>
 
-            <Link href="#about" className="link-wipe inline-flex items-center gap-1.5 text-sm font-medium mt-6 focus-ring" style={{ color: 'var(--color-accent)' }}>
+            <Link href="#about" className="link-wipe inline-flex items-center gap-1.5 text-sm font-medium mt-6 focus-ring" style={{ color: 'var(--color-accent-text)' }}>
               {h.viewProfile}
               <ArrowRight size={13} aria-hidden="true" />
             </Link>

@@ -9,12 +9,13 @@ interface Day {
 }
 
 // single-accent intensity ramp (no GitHub green)
+// navy ramp derived only from #00489d (accent) and #4187e0 (accent-text)
 const LEVEL = [
   'var(--color-surface-2)',
-  'rgba(59, 130, 246, 0.28)',
-  'rgba(59, 130, 246, 0.5)',
-  'rgba(59, 130, 246, 0.75)',
-  'var(--color-accent)',
+  'rgba(0, 72, 157, 0.6)',
+  'rgba(65, 135, 224, 0.55)',
+  'rgba(65, 135, 224, 0.8)',
+  '#4187e0',
 ]
 
 /** GitHub contribution heatmap, treated as an ambient design element (no verbose caption). */

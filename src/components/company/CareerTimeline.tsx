@@ -29,7 +29,7 @@ export default function CareerTimeline({ items, compact = false }: CareerTimelin
               width: 11,
               height: 11,
               borderRadius: 9999,
-              backgroundColor: m.highlight ? 'var(--color-accent)' : 'var(--color-surface-3)',
+              backgroundColor: m.highlight ? 'var(--color-accent-text)' : 'var(--color-surface-3)',
               border: m.highlight ? 'none' : '1px solid var(--color-border-strong)',
             }}
           />
@@ -37,7 +37,7 @@ export default function CareerTimeline({ items, compact = false }: CareerTimelin
             <time
               dateTime={m.iso}
               className="mono block text-[11px] mb-1.5"
-              style={{ color: m.highlight ? 'var(--color-accent)' : 'var(--color-text-muted)', letterSpacing: '0.04em' }}
+              style={{ color: m.highlight ? 'var(--color-accent-text)' : 'var(--color-text-muted)', letterSpacing: '0.04em' }}
             >
               {m.period}
             </time>
@@ -62,10 +62,10 @@ export default function CareerTimeline({ items, compact = false }: CareerTimelin
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram — 6grams（武蔵小山）"
-                className="inline-flex items-center gap-1.5 mt-2 text-[11px] transition-colors hover:text-[color:var(--color-text)] focus-ring"
+                className="inline-flex items-center gap-2 mt-2.5 text-[11px] transition-colors hover:text-[color:var(--color-accent-text)] focus-ring"
                 style={{ color: 'var(--color-text-muted)' }}
               >
-                <InstagramIcon size={14} />
+                <InstagramIcon size={15} />
                 <span className="mono">@6grams_musashikoyama</span>
               </a>
             )}
