@@ -33,7 +33,7 @@ export default function WorksSection({ repos, contributions }: { repos: Repo[]; 
         {/* heatmap + products: side-by-side on desktop, stacked on mobile */}
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 items-start mb-14">
           <Reveal>
-            <p className="eyebrow mb-5">GitHub</p>
+            <p className="eyebrow mb-5">{a.contribEyebrow}</p>
             <ContributionGraph days={contributions.days} total={contributions.total} />
           </Reveal>
 
