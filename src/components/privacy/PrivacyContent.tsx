@@ -1,5 +1,6 @@
 'use client'
 
+import { ShieldCheck } from 'lucide-react'
 import PageHero from '@/components/ui/PageHero'
 import SectionWrapper from '@/components/ui/SectionWrapper'
 import { useLocale } from '@/lib/i18n'
@@ -11,7 +12,7 @@ export default function PrivacyContent() {
 
   return (
     <>
-      <PageHero eyebrow={p.eyebrow} title={p.heading} />
+      <PageHero eyebrow={p.eyebrow} title={p.heading} icon={<ShieldCheck size={14} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />} />
       <SectionWrapper>
         <article className="max-w-2xl" style={{ color: 'var(--color-text-body)' }}>
           <p className="leading-loose mb-12" style={{ color: muted }}>{p.intro}</p>

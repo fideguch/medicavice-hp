@@ -32,7 +32,7 @@ export default function ContactSection() {
                 {c.reassurance.map((item) => (
                   <li key={item.title} className="flex flex-col gap-1">
                     <span className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>{item.title}</span>
-                    <span className="text-xs leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>{item.body}</span>
+                    <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-muted)', textWrap: 'balance' }}>{item.body}</p>
                   </li>
                 ))}
               </ul>

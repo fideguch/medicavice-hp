@@ -13,10 +13,10 @@ export default function AboutSection() {
   const a = t.about
 
   // merge translated text (dict) with language-neutral iso/highlight (content)
-  const itBase: CareerItem[] = t.history.it.map((x, i) => ({ ...x, iso: HISTORY_IT[i].iso, highlight: HISTORY_IT[i].highlight }))
+  const itBase: CareerItem[] = t.history.it.map((x, i) => ({ ...x, iso: HISTORY_IT[i]?.iso ?? '', highlight: HISTORY_IT[i]?.highlight }))
   const bartender: CareerItem = { ...t.history.bartender, iso: BARTENDER.iso, instagram: BARTENDER.instagram }
   const itItems: CareerItem[] = [...itBase.slice(0, 2), bartender, ...itBase.slice(2)]
-  const medItems: CareerItem[] = t.history.med.map((x, i) => ({ ...x, iso: HISTORY_MED[i].iso, highlight: HISTORY_MED[i].highlight }))
+  const medItems: CareerItem[] = t.history.med.map((x, i) => ({ ...x, iso: HISTORY_MED[i]?.iso ?? '', highlight: HISTORY_MED[i]?.highlight }))
 
   return (
     <section id="about" className="py-24 sm:py-28 hairline-t" style={{ backgroundColor: 'var(--color-surface-1)' }}>

@@ -72,8 +72,9 @@ p { text-wrap: pretty; }
 ::selection { background: var(--color-accent-soft); color: var(--color-text); }
 
 /* natural JP/EN line wrapping: phrase-aware breaks + no orphans (PC + SP) */
-p { text-wrap: pretty; word-break: auto-phrase; }
+p, li, address { text-wrap: pretty; word-break: auto-phrase; }
 h1, h2, h3 { text-wrap: pretty; }
+h2, h3 { word-break: auto-phrase; }
 
 /* ===== typography utilities ===== */
 .eyebrow {

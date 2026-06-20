@@ -24,6 +24,7 @@ export default function ServicesSection() {
         <div className="flex flex-col gap-4">
           {s.items.map((item, i) => {
             const meta = SERVICES[i]
+            if (!meta) return null
             return (
               <Reveal key={meta.number} delay={i * 0.05}>
                 <article className="card p-7 sm:p-9">
