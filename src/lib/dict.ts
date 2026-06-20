@@ -72,7 +72,7 @@ export const dict = {
       eyebrow: 'プロダクト',
       privateBadge: '非公開',
       items: {
-        kireinavi: { name: 'きれいナビ', label: '個人開発', description: 'すぐ見つかる、安心の検索・予約サービス。企画から開発・運用までを一人で担当。' },
+        kireinavi: { name: 'きれいナビ', label: '個人開発', description: '清掃業者向けの検索・予約サービス。決済をはじめ、清掃業者に必要な機能まで一通り揃えたプロダクト。企画から開発・運用まで一人で担当。' },
       },
     },
     repos: {
@@ -285,7 +285,7 @@ export const dict = {
       eyebrow: 'Products',
       privateBadge: 'Private',
       items: {
-        kireinavi: { name: 'KireiNavi', label: 'Solo build', description: 'A quick, reassuring search-and-booking service — built and run end to end, solo, from concept through development and operations.' },
+        kireinavi: { name: 'KireiNavi', label: 'Solo build', description: 'A search & booking service for cleaning companies — payments included, with the full set of features a cleaning business needs. Designed, built, and run end to end, solo.' },
       },
     },
     repos: {

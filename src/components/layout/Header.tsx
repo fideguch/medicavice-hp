@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect, useCallback } from 'react'
+import LogoMark from '@/components/ui/LogoMark'
 import { useLocale } from '@/lib/i18n'
 
 const NAV = [
@@ -53,8 +54,7 @@ export default function Header() {
       <header className="sticky top-0 z-50" style={headerStyle}>
         <div className="relative max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-75 transition-opacity focus-ring" aria-label={t.ui.logoHomeAria}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="" aria-hidden="true" width={32} height={32} style={{ filter: 'brightness(0) invert(1)', flexShrink: 0, objectFit: 'contain' }} />
+            <LogoMark style={{ height: 22, width: 'auto', color: 'var(--color-text)', flexShrink: 0 }} />
             <span className="mono" style={{ color: 'var(--color-text)', fontSize: '13px', fontWeight: 500, letterSpacing: '0.01em' }}>{t.ui.logoText}</span>
           </Link>
 

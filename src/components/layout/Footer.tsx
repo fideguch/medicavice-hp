@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import SocialLinks from '@/components/ui/SocialLinks'
+import LogoMark from '@/components/ui/LogoMark'
 import { MEDIMONY_URL } from '@/lib/content'
 import { useLocale } from '@/lib/i18n'
 
@@ -24,8 +25,7 @@ export default function Footer() {
         <div className="flex flex-col items-center md:items-start gap-8 pb-10 md:pb-12 md:flex-row md:justify-between hairline-b">
           <div className="flex flex-col items-center md:items-start">
             <Link href="/" className="flex items-center gap-2.5 focus-ring" aria-label={fo.homeAria}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="" aria-hidden="true" width={36} height={36} style={{ filter: 'brightness(0) invert(1)', flexShrink: 0, objectFit: 'contain' }} />
+              <LogoMark style={{ height: 24, width: 'auto', color: 'var(--color-text)', flexShrink: 0 }} />
               <span style={{ fontSize: '16px', fontWeight: 700, color: 'var(--color-text)', letterSpacing: '-0.01em' }}>{fo.companyName}</span>
             </Link>
             <SocialLinks className="mt-3 -ml-2" size={17} />
