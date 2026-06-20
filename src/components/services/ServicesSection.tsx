@@ -16,7 +16,7 @@ export default function ServicesSection() {
         <div className="mb-14">
           <p className="eyebrow mb-5">{s.eyebrow}</p>
           <h2 className="heading-section"><MaskText>{s.heading}</MaskText></h2>
-          <p className="text-muted mt-4 max-w-md text-sm leading-loose">{s.intro}</p>
+          <p className="text-muted mt-4 max-w-2xl text-sm leading-loose">{s.intro}</p>
         </div>
 
         <div className="flex flex-col gap-4">

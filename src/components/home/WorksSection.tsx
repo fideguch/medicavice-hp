@@ -27,7 +27,7 @@ export default function WorksSection({ repos, contributions }: { repos: Repo[]; 
         <div className="mb-12">
           <p className="eyebrow mb-5">{a.eyebrow}</p>
           <h2 className="heading-section"><MaskText>{a.heading}</MaskText></h2>
-          <p className="text-muted mt-4 max-w-xl text-sm leading-loose">{a.intro}</p>
+          <p className="text-muted mt-4 max-w-2xl text-sm leading-loose">{a.intro}</p>
         </div>
 
         {/* heatmap + products: side-by-side on desktop, stacked on mobile */}
