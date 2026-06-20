@@ -47,7 +47,7 @@
   /* fonts (next/font supplies the real faces via these vars) */
   --font-sans: var(--font-inter), var(--font-noto-sans-jp), 'Noto Sans JP', sans-serif;
   --font-jp: var(--font-zen-kaku), var(--font-noto-sans-jp), 'Noto Sans JP', sans-serif;
-  --font-mono: var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, monospace;
+  --font-mono: var(--font-geist-mono), 'Geist Mono', ui-monospace, monospace;
   --font-display: var(--font-space-grotesk), var(--font-inter), sans-serif;
 }
 

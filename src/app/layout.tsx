@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Noto_Sans_JP, JetBrains_Mono, Zen_Kaku_Gothic_New, Space_Grotesk, Outfit } from 'next/font/google'
+import { Inter, Noto_Sans_JP, Geist_Mono, Zen_Kaku_Gothic_New, Space_Grotesk, Outfit } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -24,10 +24,11 @@ const notoSansJP = Noto_Sans_JP({
   display: 'swap',
 })
 
-const jetbrainsMono = JetBrains_Mono({
+// premium monospace for eyebrows / numbers / chips / dates (all .mono + .eyebrow usages)
+const geistMono = Geist_Mono({
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-jetbrains-mono',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-geist-mono',
   display: 'swap',
 })
 
@@ -99,7 +100,7 @@ export default function RootLayout({
         <meta name="google-site-verification" content="ZyUbXcVPuUsk7xIG24Lo7VzlttNp9xRA0V7KGmGECh0" />
       </head>
       <body
-        className={`${inter.variable} ${notoSansJP.variable} ${jetbrainsMono.variable} ${zenKaku.variable} ${spaceGrotesk.variable} ${outfit.variable}`}
+        className={`${inter.variable} ${notoSansJP.variable} ${geistMono.variable} ${zenKaku.variable} ${spaceGrotesk.variable} ${outfit.variable}`}
       >
         <LocaleProvider>
           <JsonLd />

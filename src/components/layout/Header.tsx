@@ -70,20 +70,23 @@ export default function Header() {
             </Link>
           </nav>
 
-          <button
-            className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center focus-ring"
-            style={{ color: 'var(--color-text)' }}
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label={menuOpen ? t.ui.closeMenu : t.ui.openMenu}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-nav"
-          >
-            <span className="flex flex-col gap-[5px]" aria-hidden="true">
-              <span className="hamburger-bar" style={{ transform: menuOpen ? 'translateY(7px) rotate(45deg)' : undefined }} />
-              <span className="hamburger-bar" style={{ opacity: menuOpen ? 0 : 1, transform: menuOpen ? 'scaleX(0)' : undefined }} />
-              <span className="hamburger-bar" style={{ transform: menuOpen ? 'translateY(-7px) rotate(-45deg)' : undefined }} />
-            </span>
-          </button>
+          <div className="flex items-center gap-1.5 md:hidden">
+            <LangToggle />
+            <button
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center focus-ring"
+              style={{ color: 'var(--color-text)' }}
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label={menuOpen ? t.ui.closeMenu : t.ui.openMenu}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav"
+            >
+              <span className="flex flex-col gap-[5px]" aria-hidden="true">
+                <span className="hamburger-bar" style={{ transform: menuOpen ? 'translateY(7px) rotate(45deg)' : undefined }} />
+                <span className="hamburger-bar" style={{ opacity: menuOpen ? 0 : 1, transform: menuOpen ? 'scaleX(0)' : undefined }} />
+                <span className="hamburger-bar" style={{ transform: menuOpen ? 'translateY(-7px) rotate(-45deg)' : undefined }} />
+              </span>
+            </button>
+          </div>
         </div>
 
         {menuOpen && (
@@ -98,7 +101,6 @@ export default function Header() {
                 {t.nav[key]}
               </Link>
             ))}
-            <div className="flex justify-center mt-2"><LangToggle onClick={closeMenu} /></div>
             <Link href="/#contact" onClick={closeMenu} className="btn btn-accent focus-ring mt-3 w-full">{t.nav.contact}</Link>
           </nav>
         )}
