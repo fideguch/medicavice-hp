@@ -5,7 +5,7 @@ import Reveal from '@/components/ui/Reveal'
 import MaskText from '@/components/ui/MaskText'
 import ContributionGraph from '@/components/home/ContributionGraph'
 import { GH_USER, type Repo } from '@/lib/works'
-import { PRODUCTS } from '@/lib/content'
+import { PRODUCTS, MEDIMONY_URL } from '@/lib/content'
 import { useLocale } from '@/lib/i18n'
 
 interface Contributions {
@@ -62,6 +62,38 @@ export default function WorksSection({ repos, contributions }: { repos: Repo[]; 
               </ul>
             </Reveal>
           )}
+        </div>
+
+        {/* co-development partner: Medimony / WaWaTalk (device demo embed + backlink) */}
+        <div className="mb-14">
+          <p className="eyebrow mb-5">{a.collab.eyebrow}</p>
+          <Reveal>
+            <div className="card p-6 sm:p-7">
+              <div className="flex flex-col lg:flex-row lg:items-stretch gap-6 lg:gap-8">
+                <div className="lg:w-[38%] shrink-0 flex flex-col">
+                  <h3 className="heading-card mb-3" style={{ fontSize: '1.1rem' }}>{a.collab.title}</h3>
+                  <p className="text-muted text-[13.5px] leading-relaxed mb-4 flex-1">{a.collab.body}</p>
+                  <a href={MEDIMONY_URL} target="_blank" rel="noopener noreferrer" className="link-wipe inline-flex items-center gap-1.5 text-sm font-medium focus-ring w-fit" style={{ color: 'var(--color-accent-text)' }}>
+                    {a.collab.linkLabel}
+                    <ArrowUpRight size={14} aria-hidden="true" />
+                  </a>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="rounded-lg overflow-hidden" style={{ border: '1px solid var(--color-border)', aspectRatio: '16 / 10', backgroundColor: 'var(--color-surface-2)' }}>
+                    <iframe
+                      src="https://www.medimony.co.jp/wawatalk/"
+                      title={a.collab.iframeTitle}
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      className="w-full h-full"
+                      style={{ border: 0 }}
+                    />
+                  </div>
+                  <p className="mono mt-2 text-[10px]" style={{ color: 'var(--color-text-dim)' }}>{a.collab.caption}</p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
 
         {/* builds / OSS */}

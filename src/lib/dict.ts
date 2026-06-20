@@ -68,6 +68,14 @@ export const dict = {
       reposEyebrow: '制作・OSS',
       updatedLabel: '更新',
       viewAllGithub: 'GitHub で全て見る',
+      collab: {
+        eyebrow: 'COLLABORATION',
+        title: 'WaWaTalk — 音声文字化デバイス',
+        body: '株式会社メディモニーとの共同開発により、医師の言葉をリアルタイムで文字化するタブレット型デバイスを提供。医療とITを掛け合わせた取り組みのひとつです。',
+        linkLabel: '株式会社メディモニー（共同開発パートナー）',
+        iframeTitle: 'WaWaTalk — 音声文字化デバイスのデモページ',
+        caption: '※ 株式会社メディモニーが提供する WaWaTalk のサービスページです。',
+      },
     },
     products: {
       eyebrow: 'プロダクト',
@@ -282,6 +290,14 @@ export const dict = {
       reposEyebrow: 'Builds / OSS',
       updatedLabel: 'Updated',
       viewAllGithub: 'See everything on GitHub',
+      collab: {
+        eyebrow: 'COLLABORATION',
+        title: 'WaWaTalk — speech-to-text device',
+        body: "Co-developed with Medimony Inc.: a tablet device that transcribes a doctor's speech in real time — one of several efforts blending healthcare and IT.",
+        linkLabel: 'Medimony Inc. (co-development partner)',
+        iframeTitle: 'WaWaTalk — speech-to-text device demo',
+        caption: '* The WaWaTalk service page provided by Medimony Inc.',
+      },
     },
     products: {
       eyebrow: 'Products',
