@@ -1,71 +1,106 @@
+'use client'
+
 import Link from 'next/link'
-import Image from 'next/image'
+import { ArrowRight } from 'lucide-react'
+import Button from '@/components/ui/Button'
+import BlueprintGrid from '@/components/ui/BlueprintGrid'
+import AuroraGlow from '@/components/ui/AuroraGlow'
+import SocialLinks from '@/components/ui/SocialLinks'
+import InstagramIcon from '@/components/ui/InstagramIcon'
+import { BARTENDER } from '@/lib/content'
+import { useLocale } from '@/lib/i18n'
+
+const INDEX_KEYS = ['01', '02', '03'] as const
 
 export default function HeroSection() {
+  const { t } = useLocale()
+  const h = t.hero
+  // top career excerpt: current role, latest PdM role, then the bar gig
+  const career: { period: string; title: string; instagram?: string }[] = [
+    { period: t.history.it[0].period, title: t.history.it[0].title },
+    { period: t.history.it[1].period, title: t.history.it[1].title },
+    { period: t.history.bartender.period, title: t.history.bartender.title, instagram: BARTENDER.instagram },
+  ]
+
   return (
-    <section
-      data-section-bg="dark"
-      className="relative overflow-hidden"
-      style={{ height: 'clamp(520px, 75vh, 760px)' }}
-    >
-      {/* 背景画像 */}
-      <Image
-        src="/hero.png"
-        alt="医療現場で患者に寄り添う医療従事者のイメージ"
-        fill
-        className="object-cover object-center"
-        priority
+    <section className="relative overflow-hidden noise" style={{ backgroundColor: 'var(--color-bg)' }}>
+      <BlueprintGrid />
+      <AuroraGlow
+        style={{ top: '-20%', left: '32%', width: 'min(720px, 80%)', height: '72%', transform: 'translateX(-50%)', opacity: 0.4 }}
       />
-      {/* オーバーレイ */}
-      <div className="absolute inset-0" style={{ background: 'rgba(15,23,42,0.68)' }} />
 
-      {/* コンテンツ — 左下寄せ */}
-      <div className="relative h-full max-w-5xl mx-auto px-6 flex flex-col justify-end pb-16 md:pb-24">
-        <p
-          className="text-xs font-medium tracking-[0.2em] uppercase mb-5 animate-fade-in"
-          style={{ color: 'rgba(255,255,255,0.85)' }}
-        >
-          株式会社メディカバイス
-        </p>
+      <div className="relative max-w-5xl mx-auto px-6 min-h-[84vh] flex items-center py-28">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 w-full">
+          {/* left: statement */}
+          <div className="lg:col-span-7">
+            <p className="eyebrow mb-6 animate-blur-in">{h.eyebrow}</p>
 
-        <h1
-          className="mb-6 animate-fade-in-up delay-200"
-          style={{
-            fontSize: 'clamp(2.4rem, 5.5vw, 3.5rem)',
-            fontWeight: 700,
-            letterSpacing: '-0.03em',
-            lineHeight: 1.15,
-            color: '#FFFFFF',
-          }}
-        >
-          現場に寄り添う、<br />
-          確かな医療を。
-        </h1>
+            <h1 className="heading-hero max-w-2xl" style={{ fontSize: 'clamp(1.9rem, 4.8vw, 3.3rem)', lineHeight: 1.22 }}>
+              <span className="block animate-blur-in delay-100">{h.line1}</span>
+              <span className="block animate-blur-in delay-200">
+                {h.line2pre}
+                <span className="text-gradient">{h.gradient}</span>
+                {h.line2post}
+              </span>
+            </h1>
 
-        <p
-          className="mb-10 animate-fade-in-up delay-300"
-          style={{
-            fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)',
-            lineHeight: 1.85,
-            color: 'rgba(255,255,255,0.9)',
-            maxWidth: '30rem',
-          }}
-        >
-          医師としての長年の臨床経験から生まれた、<br className="hidden md:block" />
-          本当に現場で役立つソリューションを提供します。
-        </p>
+            <p className="text-body mt-7 max-w-md animate-blur-in delay-300" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.0625rem)', lineHeight: 1.85 }}>
+              {h.sub}
+            </p>
 
-        <div className="animate-fade-in-up delay-400">
-          <Link
-            href="/contact"
-            className="btn-white inline-flex items-center min-h-[52px] px-10 text-sm font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white"
-            style={{ touchAction: 'manipulation' }}
-          >
-            お気軽にご相談ください
-          </Link>
-          <p className="mt-4 text-xs" style={{ color: 'rgba(255,255,255,0.75)' }}>
-            医療・IT分野問わず、どのようなご相談もお受けしています
-          </p>
+            <div className="mt-9 flex flex-col sm:flex-row gap-3 animate-blur-in delay-400">
+              <Button href="#contact" arrow className="w-full sm:w-auto">{h.ctaContact}</Button>
+              <Button href="#services" variant="ghost" className="w-full sm:w-auto">{h.ctaServices}</Button>
+            </div>
+
+            <SocialLinks className="mt-6 -ml-2 animate-blur-in delay-500" />
+          </div>
+
+          {/* right: role index + condensed career */}
+          <div className="lg:col-span-5 lg:mt-28 lg:pl-12 lg:border-l lg:border-[color:var(--color-border-hairline)] animate-blur-in delay-300">
+            <ul className="flex flex-col gap-3.5">
+              {INDEX_KEYS.map((n) => (
+                <li key={n}>
+                  <Link href="#services" className="group flex items-baseline gap-3 focus-ring">
+                    <span className="num text-sm shrink-0" style={{ color: 'var(--color-text-dim)' }}>{n}</span>
+                    <span className="text-sm transition-colors group-hover:text-[color:var(--color-text)]" style={{ color: 'var(--color-text-muted)' }}>
+                      {h.roleIndex[n]}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <div className="hairline-t my-7" />
+
+            <p className="eyebrow mb-4">{h.careerHeading}</p>
+            <ul className="flex flex-col gap-3">
+              {career.map((c, i) => (
+                <li key={i}>
+                  <span className="mono block text-[11px] mb-0.5" style={{ color: 'var(--color-text-dim)', letterSpacing: '0.03em' }}>{c.period}</span>
+                  <span className="text-sm leading-snug" style={{ color: 'var(--color-text-body)' }}>{c.title}</span>
+                  {c.instagram && (
+                    <a
+                      href={c.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Instagram — 6grams（武蔵小山）"
+                      className="inline-flex items-center gap-1 mt-1 text-[11px] transition-colors hover:text-[color:var(--color-text)] focus-ring"
+                      style={{ color: 'var(--color-text-muted)' }}
+                    >
+                      <InstagramIcon size={13} />
+                      <span className="mono">@6grams_musashikoyama</span>
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+
+            <Link href="#about" className="link-wipe inline-flex items-center gap-1.5 text-sm font-medium mt-6 focus-ring" style={{ color: 'var(--color-accent)' }}>
+              {h.viewProfile}
+              <ArrowRight size={13} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>

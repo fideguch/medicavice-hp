@@ -1,38 +1,28 @@
 'use client'
 
 import { useActionState, useEffect, useMemo, useState } from 'react'
-import { submitContact, ContactFormState } from '@/app/actions/contact'
+import { submitContact, type ContactFormState } from '@/app/actions/contact'
 import { validateContactForm } from '@/lib/validation'
+import { useLocale } from '@/lib/i18n'
 import { CheckCircle, AlertCircle, X } from 'lucide-react'
 
-const initialState: ContactFormState = {
-  success: false,
-  message: '',
-}
+const initialState: ContactFormState = { success: false, code: 'idle' }
 
 export default function ContactForm() {
+  const { t } = useLocale()
+  const f = t.contact.form
+  const v = t.validation
+
   const [state, formAction, isPending] = useActionState(submitContact, initialState)
   const [showToast, setShowToast] = useState(false)
 
-  const [fields, setFields] = useState({
-    companyName: '',
-    email: '',
-    message: '',
-  })
-  const [touched, setTouched] = useState({
-    companyName: false,
-    email: false,
-    message: false,
-  })
+  const [fields, setFields] = useState({ companyName: '', email: '', message: '' })
+  const [touched, setTouched] = useState({ companyName: false, email: false, message: false })
 
-  // フィールド変化時のみ再計算（毎レンダー実行を防ぐ）
-  const clientErrors = useMemo(
-    () => validateContactForm(fields),
-    [fields.companyName, fields.email, fields.message]
-  )
+  const clientErrors = useMemo(() => validateContactForm(fields), [fields])
 
   useEffect(() => {
-    if (state.message) {
+    if (state.code !== 'idle') {
       setShowToast(true)
       if (state.success) {
         setFields({ companyName: '', email: '', message: '' })
@@ -55,47 +45,46 @@ export default function ContactForm() {
     }
   }, [state.fieldErrors])
 
-  const handleBlur = (field: keyof typeof touched) => {
-    setTouched((prev) => ({ ...prev, [field]: true }))
+  const handleBlur = (field: keyof typeof touched) => setTouched((prev) => ({ ...prev, [field]: true }))
+  const handleChange = (field: keyof typeof fields, value: string) => setFields((prev) => ({ ...prev, [field]: value }))
+
+  const getError = (field: keyof typeof fields): string | null => {
+    const code = (touched[field] && clientErrors[field]) || state.fieldErrors?.[field]
+    return code ? v[code] : null
   }
 
-  const handleChange = (field: keyof typeof fields, value: string) => {
-    setFields((prev) => ({ ...prev, [field]: value }))
-  }
+  const fieldClass = (field: keyof typeof fields) => `field ${getError(field) ? 'field-error' : ''}`
 
-  const getError = (field: keyof typeof fields) => {
-    if (touched[field] && clientErrors[field]) return clientErrors[field]
-    if (state.fieldErrors?.[field]) return state.fieldErrors[field]
-    return null
-  }
+  const toastText =
+    state.code === 'success' ? f.toastSuccess
+      : state.code === 'validation' ? f.toastValidationError
+        : state.code === 'config' ? f.toastConfigError
+          : state.code === 'error' ? f.toastSendError
+            : ''
 
-  const inputBase = 'w-full min-h-[44px] px-4 py-3 text-sm bg-white border transition-colors focus-visible:outline-none focus-visible:ring-2'
-  const inputStyle = { color: '#1E293B' }
+  const labelStyle = { color: 'var(--color-text)' }
+  const reqStyle = { color: 'var(--color-text-muted)' }
 
   return (
     <div className="relative">
-      {/* Toast Notification */}
       {showToast && (
         <div
           aria-live="polite"
           role="status"
-          className={`fixed top-24 right-4 left-4 sm:left-auto z-50 flex items-start gap-3 max-w-sm w-auto sm:w-full p-4 shadow-lg text-sm ${
-            state.success
-              ? 'bg-[#0F172A] text-white'
-              : 'bg-red-50 text-red-800 border border-red-200'
-          }`}
+          className="fixed top-20 right-4 left-4 sm:left-auto z-50 flex items-start gap-3 max-w-sm w-auto sm:w-full p-4 rounded-lg text-sm"
+          style={{ backgroundColor: 'var(--color-surface-3)', border: `1px solid ${state.success ? 'var(--color-accent)' : 'var(--color-error)'}`, color: 'var(--color-text)' }}
         >
           {state.success ? (
-            <CheckCircle size={18} aria-hidden="true" className="shrink-0 mt-0.5 text-white/80" />
+            <CheckCircle size={18} aria-hidden="true" className="shrink-0 mt-0.5" style={{ color: 'var(--color-accent)' }} />
           ) : (
-            <AlertCircle size={18} aria-hidden="true" className="shrink-0 mt-0.5 text-red-600" />
+            <AlertCircle size={18} aria-hidden="true" className="shrink-0 mt-0.5" style={{ color: 'var(--color-error)' }} />
           )}
-          <p className="flex-1 leading-snug">{state.message}</p>
+          <p className="flex-1 leading-snug">{toastText}</p>
           <button
             onClick={() => setShowToast(false)}
-            className="shrink-0 opacity-70 hover:opacity-100 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current"
-            aria-label="閉じる"
-            style={{ touchAction: 'manipulation' }}
+            className="shrink-0 -my-2 -mr-2 min-w-[44px] min-h-[44px] flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity focus-ring"
+            aria-label={t.ui.closeToast}
+            style={{ touchAction: 'manipulation', color: 'var(--color-text-muted)' }}
           >
             <X size={16} aria-hidden="true" />
           </button>
@@ -105,8 +94,8 @@ export default function ContactForm() {
       <form action={formAction} className="flex flex-col gap-6">
         {/* Company Name */}
         <div>
-          <label htmlFor="companyName" className="block text-sm font-medium mb-2" style={{ color: '#1E293B' }}>
-            会社名<span className="font-normal ml-1" style={{ color: '#64748B' }}>（必須）</span>
+          <label htmlFor="companyName" className="block text-sm font-medium mb-2" style={labelStyle}>
+            {f.companyLabel}<span className="font-normal ml-1" style={reqStyle}>{f.required}</span>
           </label>
           <input
             id="companyName"
@@ -117,27 +106,33 @@ export default function ContactForm() {
             onChange={(e) => handleChange('companyName', e.target.value)}
             onBlur={() => handleBlur('companyName')}
             maxLength={101}
-            placeholder="株式会社〇〇…"
+            placeholder={f.companyPlaceholder}
             aria-describedby={getError('companyName') ? 'companyName-error' : undefined}
             aria-invalid={!!getError('companyName')}
-            style={inputStyle}
-            className={`${inputBase} ${
-              getError('companyName')
-                ? 'border-red-400 focus-visible:ring-red-300'
-                : 'border-slate-200 hover:border-slate-300 focus-visible:ring-slate-300'
-            }`}
+            className={fieldClass('companyName')}
           />
           {getError('companyName') && (
-            <p id="companyName-error" className="mt-1.5 text-xs text-red-600" role="alert">
-              {getError('companyName')}
-            </p>
+            <p id="companyName-error" className="mt-1.5 text-xs" role="alert" style={{ color: 'var(--color-error)' }}>{getError('companyName')}</p>
           )}
+        </div>
+
+        {/* Inquiry type */}
+        <div>
+          <label htmlFor="inquiryType" className="block text-sm font-medium mb-2" style={labelStyle}>
+            {f.inquiryTypeLabel}<span className="font-normal ml-1" style={reqStyle}>{f.optional}</span>
+          </label>
+          <select id="inquiryType" name="inquiryType" defaultValue="" className="field">
+            <option value="">{f.inquiryTypePlaceholder}</option>
+            {f.inquiryTypes.map((opt) => (
+              <option key={opt} value={opt}>{opt}</option>
+            ))}
+          </select>
         </div>
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-2" style={{ color: '#1E293B' }}>
-            メールアドレス<span className="font-normal ml-1" style={{ color: '#64748B' }}>（必須）</span>
+          <label htmlFor="email" className="block text-sm font-medium mb-2" style={labelStyle}>
+            {f.emailLabel}<span className="font-normal ml-1" style={reqStyle}>{f.required}</span>
           </label>
           <input
             id="email"
@@ -149,35 +144,24 @@ export default function ContactForm() {
             value={fields.email}
             onChange={(e) => handleChange('email', e.target.value)}
             onBlur={() => handleBlur('email')}
-            placeholder="example@company.com…"
+            placeholder={f.emailPlaceholder}
             aria-describedby={getError('email') ? 'email-error' : undefined}
             aria-invalid={!!getError('email')}
-            style={inputStyle}
-            className={`${inputBase} ${
-              getError('email')
-                ? 'border-red-400 focus-visible:ring-red-300'
-                : 'border-slate-200 hover:border-slate-300 focus-visible:ring-slate-300'
-            }`}
+            className={fieldClass('email')}
           />
           {getError('email') && (
-            <p id="email-error" className="mt-1.5 text-xs text-red-600" role="alert">
-              {getError('email')}
-            </p>
+            <p id="email-error" className="mt-1.5 text-xs" role="alert" style={{ color: 'var(--color-error)' }}>{getError('email')}</p>
           )}
         </div>
 
         {/* Message */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <label htmlFor="message" className="block text-sm font-medium" style={{ color: '#1E293B' }}>
-              お問い合わせ内容<span className="font-normal ml-1" style={{ color: '#64748B' }}>（必須）</span>
+            <label htmlFor="message" className="block text-sm font-medium" style={labelStyle}>
+              {f.messageLabel}<span className="font-normal ml-1" style={reqStyle}>{f.required}</span>
             </label>
-            <span
-              className="text-xs"
-              aria-live="polite"
-              style={{ color: fields.message.length > 10000 ? '#DC2626' : '#64748B' }}
-            >
-              {new Intl.NumberFormat('ja-JP').format(fields.message.length)} / 10,000文字
+            <span className="mono text-xs" aria-live="polite" style={{ color: fields.message.length > 10000 ? 'var(--color-error)' : 'var(--color-text-dim)' }}>
+              {new Intl.NumberFormat('en').format(fields.message.length)} {f.messageCounterSuffix}
             </span>
           </div>
           <textarea
@@ -189,20 +173,13 @@ export default function ContactForm() {
             onChange={(e) => handleChange('message', e.target.value)}
             onBlur={() => handleBlur('message')}
             maxLength={10001}
-            placeholder="ご相談内容をご記入ください…"
+            placeholder={f.messagePlaceholder}
             aria-describedby={getError('message') ? 'message-error' : undefined}
             aria-invalid={!!getError('message')}
-            style={inputStyle}
-            className={`w-full px-4 py-3 text-sm bg-white border transition-colors resize-y focus-visible:outline-none focus-visible:ring-2 ${
-              getError('message')
-                ? 'border-red-400 focus-visible:ring-red-300'
-                : 'border-slate-200 hover:border-slate-300 focus-visible:ring-slate-300'
-            }`}
+            className={fieldClass('message')}
           />
           {getError('message') && (
-            <p id="message-error" className="mt-1.5 text-xs text-red-600" role="alert">
-              {getError('message')}
-            </p>
+            <p id="message-error" className="mt-1.5 text-xs" role="alert" style={{ color: 'var(--color-error)' }}>{getError('message')}</p>
           )}
         </div>
 
@@ -210,9 +187,9 @@ export default function ContactForm() {
           type="submit"
           disabled={isPending}
           style={{ touchAction: 'manipulation' }}
-          className="min-h-[52px] w-full md:w-auto md:px-12 flex items-center justify-center bg-[#0F172A] text-white text-sm font-medium hover:bg-[#1E293B] disabled:opacity-70 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#1E293B]"
+          className="btn btn-accent focus-ring w-full md:w-auto md:px-12 disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {isPending ? '送信中…' : '送信する'}
+          {isPending ? f.submitting : f.submit}
         </button>
       </form>
     </div>

@@ -1,134 +1,61 @@
-import Image from 'next/image'
-import SectionWrapper from '@/components/ui/SectionWrapper'
+'use client'
 
-const services = [
-  {
-    id: 1,
-    number: '01',
-    tag: '主軸事業',
-    title: '医療デバイス開発コンサルティング',
-    description:
-      '医師としての豊富な臨床経験をもとに、医療機器・デバイスの企画・開発から薬事申請まで、現場目線のコンサルティングを提供します。',
-    featured: true,
-    image: '/services.png',
-  },
-  {
-    id: 2,
-    number: '02',
-    tag: '医療',
-    title: '美容医療オンライン診療',
-    description: '場所を選ばず、専門医による質の高い美容医療をオンラインで提供します。',
-    featured: false,
-    image: '/online_beauty.png',
-  },
-  {
-    id: 3,
-    number: '03',
-    tag: 'IT',
-    title: 'プロダクトマネジメント業務',
-    description:
-      '医療・IT領域における製品・サービスの企画・設計・推進をトータルでサポートします。',
-    featured: false,
-    image: '/product.png',
-  },
-  {
-    id: 4,
-    number: '04',
-    tag: 'Web',
-    title: 'ホームページ作成',
-    description:
-      '医療機関・クリニック向けを中心に、信頼感と清潔感を重視したウェブサイト制作を行います。',
-    featured: false,
-    image: '/product.png',
-  },
-  {
-    id: 5,
-    number: '05',
-    tag: '文化',
-    title: '外国人向け料理教室',
-    description:
-      '日本の食文化を通じた国際交流の場を提供します。在日外国人や訪日客向けの料理体験を企画・運営します。',
-    featured: false,
-    image: '/cooking.png',
-  },
-]
+import Reveal from '@/components/ui/Reveal'
+import MaskText from '@/components/ui/MaskText'
+import { SERVICES } from '@/lib/content'
+import { useLocale } from '@/lib/i18n'
 
+/** Detailed view of the services (overview / audience / value). */
 export default function ServicesSection() {
-  const featured = services.find((s) => s.featured)!
-  const others = services.filter((s) => !s.featured)
+  const { t } = useLocale()
+  const s = t.services
 
   return (
-    <SectionWrapper data-section-bg="light" className="bg-[#FDFBF7]">
-      {/* Section Header */}
-      <div className="mb-20">
-        <p className="text-xs text-[#64748B] tracking-[0.2em] uppercase mb-6 font-medium">Services</p>
-        <h2 className="text-section text-[#1E293B]">事業内容</h2>
-      </div>
-
-      {/* 主軸事業 — 横並びアーティクルカード */}
-      <article
-        className="flex flex-col md:flex-row overflow-hidden mb-3"
-        style={{ border: '1px solid #E2E8F0', borderRadius: '4px' }}
-      >
-        <div className="relative w-full md:w-[42%] shrink-0 overflow-hidden" style={{ aspectRatio: '4/3' }}>
-          <Image
-            src={featured.image!}
-            alt={featured.title}
-            fill
-            className="object-cover object-center"
-          />
+    <section id="services" className="py-24 sm:py-28" style={{ backgroundColor: 'var(--color-bg)' }}>
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="mb-14">
+          <p className="eyebrow mb-5">{s.eyebrow}</p>
+          <h2 className="heading-section"><MaskText>{s.heading}</MaskText></h2>
+          <p className="text-muted mt-4 max-w-md text-sm leading-loose">{s.intro}</p>
         </div>
-        <div className="flex-1 flex flex-col justify-center p-10 md:p-14" style={{ backgroundColor: '#0F172A' }}>
-          <div className="flex items-center gap-3 mb-8">
-            <span className="text-xs font-medium tracking-[0.15em] uppercase" style={{ color: 'rgba(255,255,255,0.4)' }}>
-              {featured.number}
-            </span>
-            <span
-              className="text-xs font-medium px-2.5 py-0.5"
-              style={{ color: 'rgba(255,255,255,0.7)', backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: '2px' }}
-            >
-              {featured.tag}
-            </span>
-          </div>
-          <h3 className="text-headline text-white mb-5">{featured.title}</h3>
-          <p className="text-sm leading-loose" style={{ color: 'rgba(255,255,255,0.65)', maxWidth: '32rem' }}>
-            {featured.description}
-          </p>
-        </div>
-      </article>
 
-      {/* その他サービス — タグ+タイトル+説明のリスト */}
-      <div style={{ borderTop: '1px solid #E2E8F0' }}>
-        {others.map((service) => (
-          <div
-            key={service.id}
-            className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-8 py-7"
-            style={{ borderBottom: '1px solid #E2E8F0' }}
-          >
-            {/* 左: 番号+タグ */}
-            <div className="flex items-center gap-3 sm:w-40 shrink-0">
-              <span className="text-xs font-medium tracking-widest" style={{ color: '#64748B' }}>
-                {service.number}
-              </span>
-              <span
-                className="text-xs font-medium px-2.5 py-0.5"
-                style={{ color: '#1E293B', backgroundColor: '#F1F5F9', borderRadius: '2px' }}
-              >
-                {service.tag}
-              </span>
-            </div>
-            {/* 右: タイトル+説明 */}
-            <div className="flex-1 flex flex-col sm:flex-row sm:items-baseline sm:gap-8">
-              <h3 className="text-sm font-semibold shrink-0 sm:w-52 mb-1 sm:mb-0" style={{ color: '#1E293B' }}>
-                {service.title}
-              </h3>
-              <p className="text-sm leading-loose" style={{ color: '#64748B' }}>
-                {service.description}
-              </p>
-            </div>
-          </div>
-        ))}
+        <div className="flex flex-col gap-4">
+          {s.items.map((item, i) => {
+            const meta = SERVICES[i]
+            return (
+              <Reveal key={meta.number} delay={i * 0.05}>
+                <article className="card p-7 sm:p-9">
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-5 sm:gap-8">
+                    <div className="flex items-center gap-3 sm:flex-col sm:items-start sm:gap-3 shrink-0 sm:w-28">
+                      <span className="num text-3xl sm:text-4xl font-medium" style={{ color: 'var(--color-text-muted)' }}>
+                        {meta.number}
+                      </span>
+                      <span className="chip" style={{ padding: '0.2rem 0.6rem', whiteSpace: 'nowrap' }}>{meta.tag}</span>
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <h3 className="heading-card mb-3">{item.title}</h3>
+                      <p className="text-body text-sm leading-loose mb-6 max-w-2xl">{item.detail}</p>
+
+                      <div className="grid sm:grid-cols-[auto_1fr] gap-x-6 gap-y-3 items-baseline">
+                        <span className="eyebrow" style={{ color: 'var(--color-text-muted)' }}>{s.audienceLabel}</span>
+                        <span className="text-muted text-sm leading-relaxed">{item.audience}</span>
+
+                        <span className="eyebrow" style={{ color: 'var(--color-text-muted)' }}>{s.areasLabel}</span>
+                        <span className="flex flex-wrap gap-1.5">
+                          {item.areas.map((a) => (
+                            <span key={a} className="mono text-[11px]" style={{ color: 'var(--color-text-muted)' }}>#{a}</span>
+                          ))}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
+            )
+          })}
+        </div>
       </div>
-    </SectionWrapper>
+    </section>
   )
 }

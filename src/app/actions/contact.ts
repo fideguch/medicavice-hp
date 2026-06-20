@@ -1,7 +1,7 @@
 'use server'
 
 import nodemailer from 'nodemailer'
-import { validateContactForm, hasErrors } from '@/lib/validation'
+import { validateContactForm, hasErrors, type ValidationErrors } from '@/lib/validation'
 
 function escapeHtml(str: string) {
   return str
@@ -11,30 +11,34 @@ function escapeHtml(str: string) {
     .replace(/"/g, '&quot;')
 }
 
+// メールヘッダー（件名）用: 改行・タブを除去しヘッダーインジェクションを防ぐ
+function safeHeader(str: string) {
+  return str.replace(/[\r\n\t]/g, ' ').slice(0, 200)
+}
+
+export type ContactCode = 'idle' | 'success' | 'validation' | 'config' | 'error'
+
 export interface ContactFormState {
   success: boolean
-  message: string
-  fieldErrors?: {
-    companyName?: string
-    email?: string
-    message?: string
-  }
+  code: ContactCode
+  fieldErrors?: ValidationErrors
 }
 
 export async function submitContact(
   _prevState: ContactFormState | null,
   formData: FormData
 ): Promise<ContactFormState> {
-  const companyName = formData.get('companyName') as string
-  const email = formData.get('email') as string
-  const message = formData.get('message') as string
+  const companyName = String(formData.get('companyName') ?? '')
+  const email = String(formData.get('email') ?? '')
+  const message = String(formData.get('message') ?? '')
+  const inquiryType = String(formData.get('inquiryType') ?? '').trim()
 
   const errors = validateContactForm({ companyName, email, message })
 
   if (hasErrors(errors)) {
     return {
       success: false,
-      message: '入力内容をご確認ください。',
+      code: 'validation',
       fieldErrors: errors,
     }
   }
@@ -45,7 +49,7 @@ export async function submitContact(
     console.error('[Contact] Missing env: GMAIL_USER or GMAIL_APP_PASSWORD')
     return {
       success: false,
-      message: '送信設定が不完全です。管理者にご連絡ください。',
+      code: 'config',
     }
   }
 
@@ -53,6 +57,8 @@ export async function submitContact(
     .split(',')
     .map((e) => e.trim())
     .filter(Boolean)
+  // 通知先が未設定でも送信元アカウント宛に通知する（取りこぼし防止）
+  const recipients = toEmails.length > 0 ? toEmails : [gmailUser]
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -71,7 +77,7 @@ export async function submitContact(
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#FFFFFF;border:1px solid #E2E8F0;">
         <tr>
-          <td style="background:#0F172A;padding:24px 32px;">
+          <td style="background:#0A0B0D;padding:24px 32px;">
             <p style="margin:0;color:#FFFFFF;font-size:18px;font-weight:700;letter-spacing:-0.01em;">株式会社メディカバイス</p>
             <p style="margin:4px 0 0;color:rgba(255,255,255,0.6);font-size:12px;">お問い合わせ通知</p>
           </td>
@@ -85,8 +91,12 @@ export async function submitContact(
                 <td style="padding:12px 16px;border:1px solid #E2E8F0;border-left:none;font-size:14px;color:#1E293B;">${escapeHtml(companyName)}</td>
               </tr>
               <tr>
+                <td style="padding:12px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-top:none;font-size:12px;font-weight:600;color:#64748B;vertical-align:top;white-space:nowrap;">種別</td>
+                <td style="padding:12px 16px;border:1px solid #E2E8F0;border-left:none;border-top:none;font-size:14px;color:#1E293B;">${escapeHtml(inquiryType || '未選択')}</td>
+              </tr>
+              <tr>
                 <td style="padding:12px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-top:none;font-size:12px;font-weight:600;color:#64748B;vertical-align:top;white-space:nowrap;">メールアドレス</td>
-                <td style="padding:12px 16px;border:1px solid #E2E8F0;border-left:none;border-top:none;font-size:14px;color:#1E293B;"><a href="mailto:${escapeHtml(email)}" style="color:#0F172A;">${escapeHtml(email)}</a></td>
+                <td style="padding:12px 16px;border:1px solid #E2E8F0;border-left:none;border-top:none;font-size:14px;color:#1E293B;"><a href="mailto:${escapeHtml(email)}" style="color:#2563EB;">${escapeHtml(email)}</a></td>
               </tr>
               <tr>
                 <td style="padding:12px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-top:none;font-size:12px;font-weight:600;color:#64748B;vertical-align:top;white-space:nowrap;">お問い合わせ内容</td>
@@ -115,7 +125,7 @@ export async function submitContact(
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#FFFFFF;border:1px solid #E2E8F0;">
         <tr>
-          <td style="background:#0F172A;padding:24px 32px;">
+          <td style="background:#0A0B0D;padding:24px 32px;">
             <p style="margin:0;color:#FFFFFF;font-size:18px;font-weight:700;letter-spacing:-0.01em;">株式会社メディカバイス</p>
           </td>
         </tr>
@@ -123,7 +133,7 @@ export async function submitContact(
           <td style="padding:32px;">
             <p style="margin:0 0 16px;color:#1E293B;font-size:15px;line-height:1.7;">${escapeHtml(companyName)} ${escapeHtml(companyName).endsWith('様') ? '' : '様'}</p>
             <p style="margin:0 0 24px;color:#1E293B;font-size:14px;line-height:1.8;">この度はお問い合わせいただきありがとうございます。<br>内容を確認の上、担当者より改めてご連絡いたします。今しばらくお待ちください。</p>
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-top:2px solid #0F172A;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-top:2px solid #2563EB;">
               <tr>
                 <td style="padding:16px 0 8px;font-size:11px;font-weight:600;color:#64748B;letter-spacing:0.1em;text-transform:uppercase;">受付内容</td>
               </tr>
@@ -159,9 +169,9 @@ export async function submitContact(
     // 社内通知メール
     await transporter.sendMail({
       from: `株式会社メディカバイス <${gmailUser}>`,
-      to: toEmails,
+      to: recipients,
       replyTo: email,
-      subject: `【お問い合わせ】${companyName} 様より`,
+      subject: `【お問い合わせ${inquiryType ? `／${safeHeader(inquiryType)}` : ''}】${safeHeader(companyName)} 様より`,
       html: notifyHtml,
     })
 
@@ -175,13 +185,13 @@ export async function submitContact(
 
     return {
       success: true,
-      message: 'お問い合わせを受け付けました。担当者よりご連絡いたします。',
+      code: 'success',
     }
   } catch (err) {
-    console.error('[Nodemailer] 送信エラー:', err)
+    console.error('[Nodemailer] 送信エラー:', err instanceof Error ? err.message : String(err))
     return {
       success: false,
-      message: '送信中にエラーが発生しました。時間をおいて再度お試しください。',
+      code: 'error',
     }
   }
 }

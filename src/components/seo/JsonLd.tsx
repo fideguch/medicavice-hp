@@ -6,6 +6,7 @@ interface OrganizationJsonLd {
   name: string
   url: string
   logo: string
+  description: string
   address: {
     '@type': 'PostalAddress'
     streetAddress: string
@@ -32,12 +33,16 @@ interface WebSiteJsonLd {
   inLanguage: string
 }
 
+const DESCRIPTION =
+  '受託開発・技術コンサルティング・プロダクトマネジメントを軸に、AI・ITで事業を支援。医療の現場知を持つ技術者集団として、確かなソフトウェアと医療DXを提供します。'
+
 const organizationData: OrganizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: '株式会社メディカバイス',
   url: siteUrl,
   logo: `${siteUrl}/logo.png`,
+  description: DESCRIPTION,
   address: {
     '@type': 'PostalAddress',
     streetAddress: '西五反田5丁目23番3号 5階5D室',
@@ -60,9 +65,13 @@ const websiteData: WebSiteJsonLd = {
   '@type': 'WebSite',
   name: '株式会社メディカバイス',
   url: siteUrl,
-  description:
-    '医師としての長年の経験から生まれた、医療デバイス開発コンサルティングを中心とした医療ソリューションを提供します。',
+  description: DESCRIPTION,
   inLanguage: 'ja',
+}
+
+// `<` を < にエスケープし、</script> によるDOMブレイクアウトを防ぐ
+function jsonLdSafe(data: object): string {
+  return JSON.stringify(data).replace(/</g, '\\u003c')
 }
 
 export default function JsonLd() {
@@ -70,11 +79,11 @@ export default function JsonLd() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(organizationData) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteData) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdSafe(websiteData) }}
       />
     </>
   )

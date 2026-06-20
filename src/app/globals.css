@@ -1,175 +1,410 @@
 @import "tailwindcss";
 
-/* ===== デザイントークン ===== */
+/* =========================================================================
+   DESIGN SYSTEM v2 — Dark / AI-IT
+   Single source of truth: ../../DESIGN.md
+   有彩色アクセントは #3B82F6 の1色のみ。深度は サーフェス階調 + 半透明白罫 + glow。
+   ========================================================================= */
 
 @theme {
-  --color-base: #FDFBF7;
-  --color-surface: #FFFFFF;
-  --color-primary: #1E293B;
-  --color-accent: #0F172A;
-  --color-muted: #64748B;
-  --font-sans: 'Noto Sans JP', sans-serif;
+  /* surfaces */
+  --color-bg: #0A0B0D;
+  --color-surface-1: #121317;
+  --color-surface-2: #181A1F;
+  --color-surface-3: #1F222A;
+  --color-surface-4: #262A33;
+
+  /* borders (translucent white) */
+  --color-border-hairline: rgba(255, 255, 255, 0.08);
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+
+  /* text */
+  --color-text: #F0F1F3;
+  --color-text-body: #D4D6DB;
+  --color-text-muted: #9BA1AC;
+  --color-text-dim: #5C6370;
+
+  /* accent — the single chromatic */
+  --color-accent: #3B82F6;
+  --color-accent-hover: #5E9CFF;
+  --color-accent-soft: rgba(59, 130, 246, 0.15);
+  --color-accent-dim: rgba(59, 130, 246, 0.08);
+
+  /* voltage — glow only */
+  --color-voltage-cyan: #22D3EE;
+  --color-voltage-violet: #8B5CF6;
+
+  /* semantic */
+  --color-success: #22C55E;
+  --color-warning: #F5A623;
+  --color-error: #F87171;
+
+  /* ambient */
+  --color-grid-line: rgba(255, 255, 255, 0.05);
+
+  /* fonts (next/font supplies the real faces via these vars) */
+  --font-sans: var(--font-inter), var(--font-noto-sans-jp), 'Noto Sans JP', sans-serif;
+  --font-jp: var(--font-zen-kaku), var(--font-noto-sans-jp), 'Noto Sans JP', sans-serif;
+  --font-mono: var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, monospace;
+  --font-display: var(--font-space-grotesk), var(--font-inter), sans-serif;
 }
 
-/* ===== ベースリセット ===== */
+/* ===== base reset ===== */
+*, *::before, *::after { box-sizing: border-box; }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; color-scheme: dark; scroll-padding-top: 4.5rem; }
 
 body {
-  background-color: #FDFBF7;
-  color: #1E293B;
-  font-family: 'Noto Sans JP', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-body);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   touch-action: manipulation;
 }
 
-a, button {
-  -webkit-tap-highlight-color: transparent;
+a, button { -webkit-tap-highlight-color: transparent; }
+h1, h2, h3, h4 { text-wrap: balance; color: var(--color-text); }
+p { text-wrap: pretty; }
+
+::selection { background: var(--color-accent-soft); color: var(--color-text); }
+
+/* ===== typography utilities ===== */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
 }
 
-h1, h2, h3, h4 {
-  text-wrap: balance;
+.heading-hero {
+  font-family: var(--font-jp);
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--color-text);
 }
 
-p {
-  text-wrap: pretty;
-}
-
-/* ===== 見出しユーティリティ ===== */
-
-/* セクション見出し h2 — color は各コンポーネント側で指定 */
-.text-section {
+.heading-section {
+  font-family: var(--font-jp);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
   letter-spacing: -0.025em;
-  line-height: 1.25;
+  line-height: 1.2;
+  color: var(--color-text);
 }
 
-/* サブ見出し h3 — color は各コンポーネント側で指定 */
-.text-headline {
-  font-size: clamp(1.1rem, 2vw, 1.35rem);
+.heading-card {
+  font-family: var(--font-jp);
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   line-height: 1.45;
+  color: var(--color-text);
 }
 
-/* ===== ボタンユーティリティ ===== */
+.text-body  { color: var(--color-text-body); }
+.text-muted { color: var(--color-text-muted); }
+.text-dim   { color: var(--color-text-dim); }
 
-.btn-navy {
-  background-color: #0F172A;
-  color: #FFFFFF;
-  transition: background-color 0.2s ease;
-}
-.btn-navy:hover {
-  background-color: #1E293B;
-}
-
-.btn-white {
-  background-color: #FFFFFF;
-  color: #0F172A;
-  transition: opacity 0.2s ease;
-}
-.btn-white:hover {
-  opacity: 0.9;
+/* gradient keyword (use on a single word only) */
+.text-gradient {
+  background: linear-gradient(90deg, var(--color-accent), var(--color-voltage-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
-/* ===== サービスカード ===== */
+/* mono number / index */
+.mono { font-family: var(--font-mono); font-feature-settings: "tnum"; }
 
-.service-card-side {
-  background-color: #FDFBF7;
-  border: 1px solid #E2E8F0;
-  border-radius: 6px;
+/* display numerals (Space Grotesk) for large indices/figures */
+.num { font-family: var(--font-display); font-feature-settings: "tnum"; letter-spacing: -0.01em; }
+
+/* ===== buttons (full pill) ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0 1.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+.btn-accent {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+.btn-accent:hover {
+  background-color: var(--color-accent-hover);
+  box-shadow: 0 0 0 1px var(--color-accent-dim), 0 8px 24px -8px rgba(59, 130, 246, 0.5);
+}
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+.btn-ghost:hover { border-color: var(--color-border-strong); background-color: rgba(255, 255, 255, 0.03); }
+
+.btn .arrow { transition: transform 0.2s ease; }
+.btn:hover .arrow { transform: translateX(4px); }
+
+/* focus ring — consistent accent (a11y) */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--color-accent-soft);
+  border-radius: 4px;
 }
 
-/* ===== フッターリンク ===== */
-
-.footer-link {
-  color: rgba(255, 255, 255, 0.6);
-  transition: color 0.2s ease;
+/* ===== surfaces ===== */
+.card {
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border-hairline);
+  border-radius: 12px;
+  transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
 }
-.footer-link:hover {
-  color: #FFFFFF;
-}
-
-.footer-link-dim {
-  color: rgba(255, 255, 255, 0.45);
-  transition: color 0.2s ease;
-}
-.footer-link-dim:hover {
-  color: rgba(255, 255, 255, 0.8);
+.card-hover:hover {
+  border-color: var(--color-border-strong);
+  transform: translateY(-2px);
 }
 
-/* ===== ハンバーガーアニメーション ===== */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-1);
+  border: 1px solid var(--color-border-hairline);
+  border-radius: 9999px;
+  padding: 0.4rem 0.85rem;
+}
 
+.hairline-t { border-top: 1px solid var(--color-border-hairline); }
+.hairline-b { border-bottom: 1px solid var(--color-border-hairline); }
+
+/* ===== form fields (dark) ===== */
+.field {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  color: var(--color-text);
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.field::placeholder { color: var(--color-text-dim); }
+.field:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 0 4px var(--color-accent-soft); }
+.field-error { border-color: var(--color-error); }
+.field-error:focus { border-color: var(--color-error); box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.18); }
+textarea.field { min-height: auto; resize: vertical; line-height: 1.7; }
+select.field {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239BA1AC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+/* ===== ambient: blueprint grid ===== */
+.blueprint-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--color-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 35%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 35%, #000 0%, transparent 75%);
+  pointer-events: none;
+}
+
+/* ===== ambient: aurora glow ===== */
+.aurora {
+  position: absolute;
+  pointer-events: none;
+  filter: blur(70px);
+  opacity: 0.55;
+  background:
+    radial-gradient(40% 50% at 35% 40%, rgba(59, 130, 246, 0.45), transparent 70%),
+    radial-gradient(35% 45% at 65% 55%, rgba(139, 92, 246, 0.35), transparent 70%),
+    radial-gradient(30% 40% at 50% 30%, rgba(34, 211, 238, 0.20), transparent 70%);
+}
+
+/* subtle noise to kill banding */
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===== hamburger ===== */
 .hamburger-bar {
   display: block;
   width: 22px;
   height: 2px;
   background: currentColor;
   border-radius: 1px;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.2s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
 }
 
-/* ===== ページロードアニメーション ===== */
+/* ===== keyframes ===== */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes blurIn   { from { opacity: 0; transform: translateY(14px); filter: blur(10px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+@keyframes lineExpand { from { transform: scaleX(0); transform-origin: left; } to { transform: scaleX(1); transform-origin: left; } }
+@keyframes auroraDrift { 0%,100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(2%, -2%, 0) scale(1.06); } }
+@keyframes pulseDot { 0% { transform: scale(1); opacity: 0.6; } 70%,100% { transform: scale(2.4); opacity: 0; } }
+@keyframes menuSlideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+.animate-fade-in-up { animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-in    { animation: fadeIn 0.6s ease both; }
+.animate-blur-in    { animation: blurIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-line       { animation: lineExpand 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-aurora     { animation: auroraDrift 16s ease-in-out infinite; }
+.menu-slide-down    { animation: menuSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes lineExpand {
-  from { transform: scaleX(0); transform-origin: left; }
-  to   { transform: scaleX(1); transform-origin: left; }
-}
-
-@keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-20px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes menuSlideDown {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in-up   { animation: fadeInUp    0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.animate-fade-in      { animation: fadeIn      0.5s ease both; }
-.animate-line         { animation: lineExpand  0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.animate-slide-in-left{ animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.menu-slide-down      { animation: menuSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) both; }
-
-/* 遅延ユーティリティ */
 .delay-100 { animation-delay: 0.1s; }
 .delay-200 { animation-delay: 0.2s; }
 .delay-300 { animation-delay: 0.3s; }
 .delay-400 { animation-delay: 0.4s; }
 .delay-500 { animation-delay: 0.5s; }
 
-/* prefers-reduced-motion */
+/* ===== reveal on scroll (IntersectionObserver toggles .is-visible) ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+/* pulsing "now" dot for timeline */
+.now-dot { position: relative; }
+.now-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--color-accent);
+  animation: pulseDot 2s ease-out infinite;
+}
+
+/* ===== link underline wipe ===== */
+.link-wipe { position: relative; }
+.link-wipe::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -2px;
+  height: 1px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-wipe:hover::after,
+.link-wipe:focus-visible::after { transform: scaleX(1); }
+
+/* ===== scroll progress bar (CSS scroll-driven animation — progressive enhancement) ===== */
+.scroll-progress { display: none; }
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 100%;
+    transform-origin: 0 50%;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-voltage-violet));
+    z-index: 60;
+    animation: scaleProgress linear both;
+    animation-timeline: scroll(root);
+  }
+}
+@keyframes scaleProgress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* ===== heading mask reveal (clip-path wipe) ===== */
+.mask-reveal {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.mask-inner { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .js .mask-reveal .mask-inner {
+    transform: translateY(110%);
+    clip-path: inset(0 100% 0 0);
+    will-change: transform, clip-path;
+  }
+  .js .mask-reveal.in-view .mask-inner {
+    animation: lineMask 760ms cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  }
+}
+@keyframes lineMask {
+  from { transform: translateY(110%); clip-path: inset(0 100% 0 0); }
+  to { transform: translateY(0); clip-path: inset(0 0 0 0); }
+}
+
+/* ===== card pointer spotlight (single-accent glow follows cursor) ===== */
+.card { position: relative; }
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms ease;
+  background: radial-gradient(180px circle at var(--mx, 50%) var(--my, 50%), rgba(59, 130, 246, 0.13), transparent 70%);
+}
+@media (hover: hover) and (pointer: fine) {
+  .card:hover::before { opacity: 1; }
+}
+
+/* ===== reduced motion ===== */
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card::before { transition: none; }
+  /* universal reset: neutralize all motion incl. hover lifts & arrow nudges */
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
   .animate-fade-in-up,
   .animate-fade-in,
+  .animate-blur-in,
   .animate-line,
-  .animate-slide-in-left,
+  .animate-aurora,
   .menu-slide-down {
-    animation: none;
-    opacity: 1;
-    transform: none;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
-  .hamburger-bar {
-    transition: none;
-  }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .now-dot::after { animation: none !important; }
+  .hamburger-bar { transition: none; }
+  .scroll-progress { display: none !important; }
+  .link-wipe::after { transition: none !important; }
 }

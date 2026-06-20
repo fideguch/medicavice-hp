@@ -1,79 +1,22 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useState, useEffect, useLayoutEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { useLocale } from '@/lib/i18n'
 
-const NAV_LINKS = [
-  { href: '/', label: 'トップ' },
-  { href: '/services', label: 'サービス' },
-  { href: '/company', label: '企業情報' },
+const NAV = [
+  { href: '/#services', key: 'services' },
+  { href: '/#works', key: 'works' },
+  { href: '/#about', key: 'about' },
 ] as const
 
-type Theme = 'dark' | 'light'
-
-const THEMES = {
-  dark: {
-    bg: 'rgba(15, 23, 42, 0.88)',
-    border: 'rgba(255,255,255,0.1)',
-    logo: '#FFFFFF',
-    navInactive: 'rgba(255,255,255,0.6)',
-    navActive: '#FFFFFF',
-    navActiveBorder: 'rgba(255,255,255,0.45)',
-    ctaBg: '#FFFFFF',
-    ctaColor: '#0F172A',
-    icon: '#FFFFFF',
-    ring: 'focus-visible:ring-white focus-visible:ring-offset-[#0F172A]',
-  },
-  light: {
-    bg: 'rgba(253, 251, 247, 0.88)',
-    border: 'rgba(30, 41, 59, 0.1)',
-    logo: '#1E293B',
-    navInactive: '#64748B',
-    navActive: '#1E293B',
-    navActiveBorder: '#1E293B',
-    ctaBg: '#0F172A',
-    ctaColor: '#FFFFFF',
-    icon: '#1E293B',
-    ring: 'focus-visible:ring-[#1E293B] focus-visible:ring-offset-[#FDFBF7]',
-  },
-} as const
-
-const HEADER_H = 80
 const SCROLL_THRESHOLD = 10
 
-function detectTheme(): Theme {
-  if (window.scrollY < 0) return 'light'
-  const sections = document.querySelectorAll<HTMLElement>('[data-section-bg]')
-  for (const el of sections) {
-    const { top, bottom } = el.getBoundingClientRect()
-    if (top <= HEADER_H + 4 && bottom > 0) {
-      return el.dataset.sectionBg === 'dark' ? 'light' : 'dark'
-    }
-  }
-  return 'light'
-}
-
 export default function Header() {
-  const pathname = usePathname()
-  const [theme, setTheme] = useState<Theme>('light')
+  const { t, toggle } = useLocale()
   const [menuOpen, setMenuOpen] = useState(false)
   const closeMenu = useCallback(() => setMenuOpen(false), [])
 
-  const isActive = (href: string) =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href)
-
-  useLayoutEffect(() => setTheme(detectTheme()), [pathname])
-  useEffect(closeMenu, [pathname, closeMenu])
-
-  // スクロール連動テーマ検出
-  useEffect(() => {
-    const onScroll = () => setTheme(detectTheme())
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  // メニュー展開中：意図的スクロール（10px超）で閉じる
   useEffect(() => {
     if (!menuOpen) return
     const startY = window.scrollY
@@ -84,98 +27,56 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [menuOpen])
 
-  const t = THEMES[theme]
+  const headerStyle = {
+    backgroundColor: 'color-mix(in srgb, var(--color-bg) 85%, transparent)',
+    borderBottom: '1px solid var(--color-border-hairline)',
+    backdropFilter: 'blur(16px)',
+    WebkitBackdropFilter: 'blur(16px)',
+  } as const
+
+  const LangToggle = ({ onClick }: { onClick?: () => void }) => (
+    <button
+      type="button"
+      onClick={() => { toggle(); onClick?.() }}
+      aria-label={t.ui.langToggleAria}
+      className="mono min-h-[36px] px-3 text-xs rounded-full transition-colors focus-ring"
+      style={{ color: 'var(--color-text-muted)', border: '1px solid var(--color-border)' }}
+    >
+      {t.ui.langToggleLabel}
+    </button>
+  )
 
   return (
     <>
-      {/* バックドロップ（メニュー外タップで閉じる） */}
-      {menuOpen && (
-        <div
-          className="fixed inset-0 z-40 md:hidden"
-          aria-hidden="true"
-          onClick={closeMenu}
-        />
-      )}
+      {menuOpen && <div className="fixed inset-0 z-40 md:hidden" aria-hidden="true" onClick={closeMenu} />}
 
-      <header
-        className="sticky top-0 z-50"
-        style={{
-          backgroundColor: t.bg,
-          borderBottom: `1px solid ${t.border}`,
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          transition: 'background-color 0.4s ease, border-color 0.4s ease',
-        }}
-      >
-        {/* ヘッダーバー */}
-        <div className="relative max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link
-            href="/"
-            className={`flex items-center gap-2.5 hover:opacity-75 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
-            aria-label="株式会社メディカバイス — トップページへ"
-          >
-            <img
-              src="/logo.png"
-              alt=""
-              aria-hidden="true"
-              width={56}
-              height={56}
-              style={{
-                filter: theme === 'dark' ? 'brightness(0) invert(1)' : 'none',
-                transition: 'filter 0.4s ease',
-                flexShrink: 0,
-                objectFit: 'contain',
-              }}
-            />
-            <span
-              className="font-bold tracking-tight"
-              style={{ color: t.logo, fontSize: '14px', transition: 'color 0.4s ease' }}
-            >
-              株式会社メディカバイス
-            </span>
+      <header className="sticky top-0 z-50" style={headerStyle}>
+        <div className="relative max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5 hover:opacity-75 transition-opacity focus-ring" aria-label={t.ui.logoHomeAria}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="" aria-hidden="true" width={32} height={32} style={{ filter: 'brightness(0) invert(1)', flexShrink: 0, objectFit: 'contain' }} />
+            <span className="mono" style={{ color: 'var(--color-text)', fontSize: '13px', fontWeight: 500, letterSpacing: '0.01em' }}>{t.ui.logoText}</span>
           </Link>
 
-          {/* デスクトップナビ */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="グローバルナビゲーション">
-            {NAV_LINKS.map(({ href, label }) => {
-              const active = isActive(href)
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  className={`text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
-                  style={{
-                    color: active ? t.navActive : t.navInactive,
-                    fontWeight: active ? 600 : 400,
-                    borderBottom: active ? `1px solid ${t.navActiveBorder}` : undefined,
-                    paddingBottom: active ? '2px' : undefined,
-                    transition: 'color 0.4s ease',
-                  }}
-                >
-                  {label}
-                </Link>
-              )
-            })}
-            <Link
-              href="/contact"
-              className={`min-h-[44px] px-5 flex items-center text-sm font-medium transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
-              style={{
-                backgroundColor: t.ctaBg,
-                color: t.ctaColor,
-                transition: 'background-color 0.4s ease, color 0.4s ease',
-              }}
-            >
-              お問い合わせ
+          <nav className="hidden md:flex items-center gap-7" aria-label={t.ui.globalNavAria}>
+            {NAV.map(({ href, key }) => (
+              <Link key={href} href={href} className="text-sm transition-colors focus-ring hover:text-[color:var(--color-text)]" style={{ color: 'var(--color-text-muted)' }}>
+                {t.nav[key]}
+              </Link>
+            ))}
+            <LangToggle />
+            <Link href="/#contact" className="btn btn-accent focus-ring" style={{ minHeight: 44, padding: '0 1.25rem', fontSize: '0.8125rem' }}>
+              {t.nav.contact}
             </Link>
           </nav>
 
-          {/* ハンバーガーボタン（SP） */}
           <button
-            className={`md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
-            style={{ color: t.icon, transition: 'color 0.4s ease' }}
-            onClick={() => setMenuOpen(v => !v)}
-            aria-label={menuOpen ? 'メニューを閉じる' : 'メニューを開く'}
+            className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center focus-ring"
+            style={{ color: 'var(--color-text)' }}
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? t.ui.closeMenu : t.ui.openMenu}
             aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
           >
             <span className="flex flex-col gap-[5px]" aria-hidden="true">
               <span className="hamburger-bar" style={{ transform: menuOpen ? 'translateY(7px) rotate(45deg)' : undefined }} />
@@ -185,55 +86,20 @@ export default function Header() {
           </button>
         </div>
 
-        {/* モバイルメニュー — absolute でボディを押し下げない */}
         {menuOpen && (
           <nav
-            className="md:hidden absolute left-0 right-0 px-6 py-6 flex flex-col items-center gap-1 menu-slide-down"
-            style={{
-              top: '100%',
-              backgroundColor: t.bg,
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              borderTop: `1px solid ${t.border}`,
-            }}
-            aria-label="モバイルナビゲーション"
+            id="mobile-nav"
+            className="md:hidden absolute left-0 right-0 px-6 py-6 flex flex-col items-stretch gap-1 menu-slide-down"
+            style={{ top: '100%', backgroundColor: 'color-mix(in srgb, var(--color-bg) 97%, transparent)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderTop: '1px solid var(--color-border-hairline)' }}
+            aria-label={t.ui.mobileNavAria}
           >
-            {NAV_LINKS.map(({ href, label }) => {
-              const active = isActive(href)
-              return active ? (
-                <span
-                  key={href}
-                  aria-current="page"
-                  className="min-h-[48px] w-full flex items-center justify-center gap-2 text-sm"
-                  style={{ color: t.navActive, fontWeight: 600, cursor: 'default' }}
-                >
-                  <span
-                    aria-hidden="true"
-                    className="inline-block w-1 h-1 rounded-full shrink-0 opacity-50"
-                    style={{ backgroundColor: 'currentColor' }}
-                  />
-                  {label}
-                </span>
-              ) : (
-                <Link
-                  key={href}
-                  href={href}
-                  onClick={closeMenu}
-                  className={`min-h-[48px] w-full flex items-center justify-center text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 ${t.ring}`}
-                  style={{ color: t.navInactive, fontWeight: 400 }}
-                >
-                  {label}
-                </Link>
-              )
-            })}
-            <Link
-              href="/contact"
-              onClick={closeMenu}
-              className={`min-h-[48px] w-full flex items-center justify-center text-sm font-medium mt-3 transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${t.ring}`}
-              style={{ backgroundColor: t.ctaBg, color: t.ctaColor }}
-            >
-              お問い合わせ
-            </Link>
+            {NAV.map(({ href, key }) => (
+              <Link key={href} href={href} onClick={closeMenu} className="min-h-[48px] w-full flex items-center justify-center text-sm focus-ring" style={{ color: 'var(--color-text-muted)' }}>
+                {t.nav[key]}
+              </Link>
+            ))}
+            <div className="flex justify-center mt-2"><LangToggle onClick={closeMenu} /></div>
+            <Link href="/#contact" onClick={closeMenu} className="btn btn-accent focus-ring mt-3 w-full">{t.nav.contact}</Link>
           </nav>
         )}
       </header>
