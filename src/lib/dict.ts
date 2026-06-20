@@ -54,7 +54,6 @@ export const dict = {
     },
     capabilities: {
       eyebrow: '対応可能領域',
-      items: ['プロダクト企画', '要件定義', '仮説検証', '効果検証', 'ロードマップ', 'データ活用', 'AI活用', '業務自動化', 'DX推進', '開発ディレクション'],
     },
     activity: {
       eyebrow: 'ACTIVITY',
@@ -276,7 +275,6 @@ export const dict = {
     },
     capabilities: {
       eyebrow: 'What I can take on',
-      items: ['Product strategy', 'Requirements', 'Hypothesis testing', 'Impact measurement', 'Roadmapping', 'Data', 'AI', 'Business automation', 'DX', 'Development direction'],
     },
     activity: {
       eyebrow: 'ACTIVITY',

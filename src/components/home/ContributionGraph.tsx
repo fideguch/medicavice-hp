@@ -1,5 +1,6 @@
 'use client'
 
+import { GitCommitHorizontal } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 
 interface Day {
@@ -47,7 +48,8 @@ export default function ContributionGraph({ days, total }: { days: Day[]; total:
             />
           ))}
         </div>
-        <span className="num text-sm shrink-0 pb-0.5" style={{ color: 'var(--color-text-muted)' }}>
+        <span className="num text-sm shrink-0 pb-0.5 inline-flex items-center gap-1.5" style={{ color: 'var(--color-text-muted)' }}>
+          <GitCommitHorizontal size={13} strokeWidth={1.5} aria-hidden="true" />
           {total.toLocaleString()} <span className="text-[10px]" style={{ color: 'var(--color-text-dim)' }}>{t.activity.commitsLabel}</span>
         </span>
       </div>

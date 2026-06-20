@@ -1,6 +1,7 @@
 'use client'
 
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Activity, Package, Handshake, GitBranch } from 'lucide-react'
+import GithubIcon from '@/components/ui/GithubIcon'
 import Reveal from '@/components/ui/Reveal'
 import MaskText from '@/components/ui/MaskText'
 import ContributionGraph from '@/components/home/ContributionGraph'
@@ -25,7 +26,7 @@ export default function WorksSection({ repos, contributions }: { repos: Repo[]; 
     <section id="works" className="py-24 sm:py-28 hairline-t" style={{ backgroundColor: 'var(--color-bg)' }}>
       <div className="max-w-5xl mx-auto px-6">
         <div className="mb-12">
-          <p className="eyebrow mb-5">{a.eyebrow}</p>
+          <p className="eyebrow mb-5 inline-flex items-center gap-1.5"><Activity size={14} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />{a.eyebrow}</p>
           <h2 className="heading-section"><MaskText>{a.heading}</MaskText></h2>
           <p className="text-muted mt-4 max-w-2xl text-sm leading-loose">{a.intro}</p>
         </div>
@@ -33,13 +34,13 @@ export default function WorksSection({ repos, contributions }: { repos: Repo[]; 
         {/* heatmap + products: side-by-side on desktop, stacked on mobile */}
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 items-start mb-14">
           <Reveal>
-            <p className="eyebrow mb-5">{a.contribEyebrow}</p>
+            <p className="eyebrow mb-5 inline-flex items-center gap-1.5"><GithubIcon size={13} style={{ color: 'var(--color-accent-text)' }} />{a.contribEyebrow}</p>
             <ContributionGraph days={contributions.days} total={contributions.total} />
           </Reveal>
 
           {PRODUCTS.length > 0 && (
             <Reveal delay={0.06}>
-              <p className="eyebrow mb-5">{pr.eyebrow}</p>
+              <p className="eyebrow mb-5 inline-flex items-center gap-1.5"><Package size={14} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />{pr.eyebrow}</p>
               <ul className="flex flex-col gap-4">
                 {PRODUCTS.map((p) => {
                   const txt = productText[p.id]
@@ -66,7 +67,7 @@ export default function WorksSection({ repos, contributions }: { repos: Repo[]; 
 
         {/* co-development partner: Medimony / WaWaTalk (backlink) */}
         <div className="mb-14">
-          <p className="eyebrow mb-5">{a.collab.eyebrow}</p>
+          <p className="eyebrow mb-5 inline-flex items-center gap-1.5"><Handshake size={14} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />{a.collab.eyebrow}</p>
           <Reveal>
             <a
               href={WAWATALK_URL}
@@ -90,7 +91,7 @@ export default function WorksSection({ repos, contributions }: { repos: Repo[]; 
         {/* builds / OSS */}
         {repos.length > 0 && (
           <>
-            <p className="eyebrow mb-6">{a.reposEyebrow}</p>
+            <p className="eyebrow mb-6 inline-flex items-center gap-1.5"><GitBranch size={14} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />{a.reposEyebrow}</p>
             <ul className="grid gap-4 sm:grid-cols-2">
               {repos.map((r, i) => {
                 const txt = repoText[r.name]

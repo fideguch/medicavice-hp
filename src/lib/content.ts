@@ -13,6 +13,41 @@ export const SOCIAL = {
 export const MEDIMONY_URL = 'https://www.medimony.co.jp/'
 export const WAWATALK_URL = 'https://www.medimony.co.jp/wawatalk/'
 
+/** Capability areas for the 対応可能領域 strip — grouped clusters. Language-neutral: chips carry ja+en. */
+export const CAPABILITY_GROUPS = [
+  {
+    key: 'product',
+    label: 'PRODUCT',
+    chips: [
+      { ja: 'プロダクトマネジメント', en: 'Product Management' },
+      { ja: '要件定義・仕様駆動開発', en: 'Spec-Driven Development' },
+      { ja: '開発ディレクション', en: 'Dev Direction' },
+      { ja: 'プロトタイピング・MVP開発', en: 'Rapid Prototyping & MVP' },
+    ],
+  },
+  {
+    key: 'ai',
+    label: 'AI & AUTOMATION',
+    chips: [
+      { ja: 'AIエージェント設計・運用', en: 'AI Agent Design & Ops' },
+      { ja: '業務自動化ワークフロー構築', en: 'Workflow Automation' },
+      { ja: '生成AI業務導入支援', en: 'Generative AI Adoption' },
+      { ja: 'AI活用の業務プロセス設計', en: 'AI Process Redesign' },
+      { ja: 'AI評価・精度改善（Eval）', en: 'AI Evaluation & Evals' },
+      { ja: '社内ナレッジ検索基盤（RAG）', en: 'Knowledge Retrieval (RAG)' },
+    ],
+  },
+  {
+    key: 'data',
+    label: 'DATA & DX',
+    chips: [
+      { ja: 'データ分析・KPI設計', en: 'Data Analysis & KPIs' },
+      { ja: 'DX推進・伴走支援', en: 'DX Enablement' },
+      { ja: '医療・ヘルスケアDX', en: 'Healthcare DX' },
+    ],
+  },
+] as const
+
 /** Service metadata (number + tag). Titles / details are in dict.services.items. */
 export interface Service {
   number: string

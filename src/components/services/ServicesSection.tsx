@@ -2,6 +2,7 @@
 
 import Reveal from '@/components/ui/Reveal'
 import MaskText from '@/components/ui/MaskText'
+import { Sparkles } from 'lucide-react'
 import { SERVICES } from '@/lib/content'
 import { useLocale } from '@/lib/i18n'
 
@@ -14,7 +15,7 @@ export default function ServicesSection() {
     <section id="services" className="py-24 sm:py-28" style={{ backgroundColor: 'var(--color-bg)' }}>
       <div className="max-w-5xl mx-auto px-6">
         <div className="mb-14">
-          <p className="eyebrow mb-5">{s.eyebrow}</p>
+          <p className="eyebrow mb-5 inline-flex items-center gap-1.5"><Sparkles size={14} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />{s.eyebrow}</p>
           <h2 className="heading-section"><MaskText>{s.heading}</MaskText></h2>
           <p className="text-muted mt-4 max-w-2xl text-sm leading-loose">{s.intro}</p>
         </div>
