@@ -2,6 +2,8 @@
 
 import Reveal from '@/components/ui/Reveal'
 import MaskText from '@/components/ui/MaskText'
+import Eyebrow from '@/components/ui/Eyebrow'
+import { User, Briefcase, Stethoscope, Building2 } from 'lucide-react'
 import CareerTimeline from '@/components/company/CareerTimeline'
 import { HISTORY_IT, HISTORY_MED, BARTENDER, type CareerItem } from '@/lib/content'
 import { useLocale } from '@/lib/i18n'
@@ -20,7 +22,7 @@ export default function AboutSection() {
     <section id="about" className="py-24 sm:py-28 hairline-t" style={{ backgroundColor: 'var(--color-surface-1)' }}>
       <div className="max-w-5xl mx-auto px-6">
         <div className="mb-12">
-          <p className="eyebrow mb-5">{a.eyebrow}</p>
+          <Eyebrow className="mb-5" icon={<User size={14} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />}>{a.eyebrow}</Eyebrow>
           <h2 className="heading-section"><MaskText>{a.heading}</MaskText></h2>
         </div>
 
@@ -28,7 +30,7 @@ export default function AboutSection() {
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 mb-16">
           <div>
             <Reveal>
-              <p className="eyebrow mb-2">{a.itRole}</p>
+              <Eyebrow className="mb-2" icon={<Briefcase size={13} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />}>{a.itRole}</Eyebrow>
               <h3 className="heading-card mb-1">
                 {a.itNameEn} <span className="text-muted text-sm font-normal">{a.itNameJa}</span>
               </h3>
@@ -42,7 +44,7 @@ export default function AboutSection() {
 
           <div>
             <Reveal>
-              <p className="eyebrow mb-2">{a.medRole}</p>
+              <Eyebrow className="mb-2" icon={<Stethoscope size={13} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />}>{a.medRole}</Eyebrow>
               <h3 className="heading-card mb-1">{a.medName}</h3>
               <p className="text-muted text-sm leading-relaxed mb-7">{a.medBio}</p>
             </Reveal>
@@ -52,7 +54,7 @@ export default function AboutSection() {
 
         {/* company */}
         <Reveal>
-          <p className="eyebrow mb-5">{a.companyEyebrow}</p>
+          <Eyebrow className="mb-5" icon={<Building2 size={14} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />}>{a.companyEyebrow}</Eyebrow>
           <div className="card overflow-hidden">
             <table className="w-full text-sm">
               <tbody>

@@ -1,9 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Menu, MapPin } from 'lucide-react'
 import SocialLinks from '@/components/ui/SocialLinks'
 import LogoMark from '@/components/ui/LogoMark'
+import Eyebrow from '@/components/ui/Eyebrow'
 import { MEDIMONY_URL } from '@/lib/content'
 import { useLocale } from '@/lib/i18n'
 
@@ -34,7 +35,7 @@ export default function Footer() {
           <nav aria-label={fo.navAria}>
             <div className="flex gap-12 sm:gap-16">
               <div className="flex flex-col gap-3">
-                <p className="eyebrow">{fo.menuLabel}</p>
+                <Eyebrow icon={<Menu size={13} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />}>{fo.menuLabel}</Eyebrow>
                 {FOOTER_NAV.map((link) => (
                   <Link key={link.href} href={link.href} className="text-[13px] transition-colors hover:text-[color:var(--color-text)] focus-ring" style={{ color: muted }}>
                     {t.nav[link.key]}
@@ -42,7 +43,7 @@ export default function Footer() {
                 ))}
               </div>
               <div className="flex flex-col gap-3 items-center md:items-start">
-                <p className="eyebrow">{fo.locationLabel}</p>
+                <Eyebrow icon={<MapPin size={13} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />}>{fo.locationLabel}</Eyebrow>
                 <p className="text-center md:text-left text-[12px] leading-relaxed whitespace-pre-line" style={{ color: muted }}>{fo.address}</p>
                 <a href={MEDIMONY_URL} target="_blank" rel="noopener noreferrer" className="text-[12px] inline-flex items-center gap-1 transition-colors hover:text-[color:var(--color-text)] focus-ring" style={{ color: muted }}>
                   {fo.partner}

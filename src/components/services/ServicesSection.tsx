@@ -3,7 +3,7 @@
 import Reveal from '@/components/ui/Reveal'
 import MaskText from '@/components/ui/MaskText'
 import Eyebrow from '@/components/ui/Eyebrow'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, Users, Layers } from 'lucide-react'
 import { SERVICES } from '@/lib/content'
 import { useLocale } from '@/lib/i18n'
 
@@ -40,10 +40,10 @@ export default function ServicesSection() {
                       <p className="text-body text-sm leading-loose mb-6 max-w-2xl">{item.detail}</p>
 
                       <div className="grid sm:grid-cols-[auto_1fr] gap-x-6 gap-y-3 items-baseline">
-                        <span className="eyebrow" style={{ color: 'var(--color-text-muted)' }}>{s.audienceLabel}</span>
+                        <span className="eyebrow inline-flex items-center gap-1.5" style={{ color: 'var(--color-text-muted)' }}><Users size={13} strokeWidth={1.5} aria-hidden="true" />{s.audienceLabel}</span>
                         <span className="text-muted text-sm leading-relaxed">{item.audience}</span>
 
-                        <span className="eyebrow" style={{ color: 'var(--color-text-muted)' }}>{s.areasLabel}</span>
+                        <span className="eyebrow inline-flex items-center gap-1.5" style={{ color: 'var(--color-text-muted)' }}><Layers size={13} strokeWidth={1.5} aria-hidden="true" />{s.areasLabel}</span>
                         <span className="flex flex-wrap gap-1.5">
                           {item.areas.map((a) => (
                             <span key={a} className="mono text-[11px]" style={{ color: 'var(--color-text-muted)' }}>#{a}</span>

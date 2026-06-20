@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Milestone } from 'lucide-react'
 import Button from '@/components/ui/Button'
+import Eyebrow from '@/components/ui/Eyebrow'
 import BlueprintGrid from '@/components/ui/BlueprintGrid'
 import AuroraGlow from '@/components/ui/AuroraGlow'
 import SocialLinks from '@/components/ui/SocialLinks'
@@ -73,7 +74,7 @@ export default function HeroSection() {
 
             <div className="hairline-t my-7" />
 
-            <p className="eyebrow mb-4">{h.careerHeading}</p>
+            <Eyebrow className="mb-4" icon={<Milestone size={14} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />}>{h.careerHeading}</Eyebrow>
             <ul className="flex flex-col gap-3">
               {career.map((c, i) => (
                 <li key={i}>
