@@ -70,7 +70,12 @@ export const metadata: Metadata = {
     siteName: '株式会社メディカバイス',
     locale: 'ja_JP',
     type: 'website',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: '株式会社メディカバイス' }],
+    images: [
+      // 1.91:1 — primary card for Facebook / LINE / はてな / Slack / X(summary_large_image)
+      { url: '/og-image.png', width: 1200, height: 630, alt: '株式会社メディカバイス' },
+      // 1:1 — alternative for platforms that prefer / crop to square (WhatsApp, iMessage 等)
+      { url: '/og-image-square.png', width: 1200, height: 1200, alt: '株式会社メディカバイス' },
+    ],
   },
   twitter: {
     card: 'summary_large_image',

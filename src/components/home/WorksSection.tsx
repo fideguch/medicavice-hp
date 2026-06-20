@@ -30,40 +30,39 @@ export default function WorksSection({ repos, contributions }: { repos: Repo[]; 
           <p className="text-muted mt-4 max-w-xl text-sm leading-loose">{a.intro}</p>
         </div>
 
-        <Reveal className="mb-14">
-          <ContributionGraph days={contributions.days} total={contributions.total} />
-        </Reveal>
+        {/* heatmap + products: side-by-side on desktop, stacked on mobile */}
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 items-start mb-14">
+          <Reveal>
+            <p className="eyebrow mb-5">GitHub</p>
+            <ContributionGraph days={contributions.days} total={contributions.total} />
+          </Reveal>
 
-        {/* products (incl. private) */}
-        {PRODUCTS.length > 0 && (
-          <>
-            <p className="eyebrow mb-6">{pr.eyebrow}</p>
-            <ul className="mb-14 flex flex-col gap-4">
-              {PRODUCTS.map((p) => {
-                const txt = productText[p.id]
-                if (!txt) return null
-                return (
-                  <li key={p.id}>
-                    <Reveal>
-                      <div className="card p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
-                        <div className="sm:w-52 shrink-0 flex items-center gap-3">
+          {PRODUCTS.length > 0 && (
+            <Reveal delay={0.06}>
+              <p className="eyebrow mb-5">{pr.eyebrow}</p>
+              <ul className="flex flex-col gap-4">
+                {PRODUCTS.map((p) => {
+                  const txt = productText[p.id]
+                  if (!txt) return null
+                  return (
+                    <li key={p.id}>
+                      <div className="card p-6 sm:p-7 h-full">
+                        <div className="flex items-center gap-3 mb-3">
                           <span className="heading-card" style={{ fontSize: '1.05rem' }}>{txt.name}</span>
                           {p.isPrivate && (
                             <span className="chip shrink-0" style={{ padding: '0.18rem 0.55rem', fontSize: '0.62rem' }}>{pr.privateBadge}</span>
                           )}
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-muted text-[13px] leading-relaxed mb-2">{txt.description}</p>
-                          <span className="mono text-[10px]" style={{ color: 'var(--color-text-dim)' }}>{txt.label}</span>
-                        </div>
+                        <p className="text-muted text-[13px] leading-relaxed mb-3">{txt.description}</p>
+                        <span className="mono text-[10px]" style={{ color: 'var(--color-text-dim)' }}>{txt.label}</span>
                       </div>
-                    </Reveal>
-                  </li>
-                )
-              })}
-            </ul>
-          </>
-        )}
+                    </li>
+                  )
+                })}
+              </ul>
+            </Reveal>
+          )}
+        </div>
 
         {/* builds / OSS */}
         {repos.length > 0 && (
