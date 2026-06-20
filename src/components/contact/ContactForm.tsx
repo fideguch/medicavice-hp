@@ -9,7 +9,7 @@ import { CheckCircle, AlertCircle, X } from 'lucide-react'
 const initialState: ContactFormState = { success: false, code: 'idle' }
 
 export default function ContactForm() {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const f = t.contact.form
   const v = t.validation
 
@@ -161,7 +161,7 @@ export default function ContactForm() {
               {f.messageLabel}<span className="font-normal ml-1" style={reqStyle}>{f.required}</span>
             </label>
             <span className="mono text-xs" aria-live="polite" style={{ color: fields.message.length > 10000 ? 'var(--color-error)' : 'var(--color-text-dim)' }}>
-              {new Intl.NumberFormat('en').format(fields.message.length)} {f.messageCounterSuffix}
+              {new Intl.NumberFormat(locale).format(fields.message.length)} {f.messageCounterSuffix}
             </span>
           </div>
           <textarea

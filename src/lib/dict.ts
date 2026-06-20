@@ -72,8 +72,6 @@ export const dict = {
         title: 'WaWaTalk — 音声文字化デバイス',
         body: '株式会社メディモニーとの共同開発により、医師の言葉をリアルタイムで文字化するタブレット型デバイスを提供しています。',
         linkLabel: 'WaWaTalk を見る（株式会社メディモニー）',
-        iframeTitle: 'WaWaTalk — 音声文字化デバイスのデモページ',
-        caption: '※ 株式会社メディモニーが提供する WaWaTalk のサービスページです。',
       },
     },
     products: {
@@ -293,8 +291,6 @@ export const dict = {
         title: 'WaWaTalk — speech-to-text device',
         body: "Co-developed with Medimony Inc.: a tablet device that transcribes a doctor's speech in real time.",
         linkLabel: 'View WaWaTalk (Medimony Inc.)',
-        iframeTitle: 'WaWaTalk — speech-to-text device demo',
-        caption: '* The WaWaTalk service page provided by Medimony Inc.',
       },
     },
     products: {
