@@ -10,7 +10,7 @@ export default async function HomePage() {
   const [repos, contributions] = await Promise.all([getFeaturedRepos(), getContributions()])
   return (
     <>
-      <HeroSection />
+      <HeroSection contributions={contributions} />
       <ServicesSection />
       <TechStackStrip />
       <WorksSection repos={repos} contributions={contributions} />
