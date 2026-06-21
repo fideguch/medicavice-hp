@@ -9,16 +9,12 @@ import AuroraGlow from '@/components/ui/AuroraGlow'
 import SocialLinks from '@/components/ui/SocialLinks'
 import { useLocale } from '@/lib/i18n'
 
-const INDEX_KEYS = ['01', '02', '03'] as const
-
 export default function HeroSection() {
   const { t } = useLocale()
   const h = t.hero
-  // top career excerpt: three most relevant IT / PdM roles
+  // hero career excerpt: current role only (full history is behind the "view profile" link)
   const career: { period: string; title: string }[] = [
     { period: t.history.it[0].period, title: t.history.it[0].title },
-    { period: t.history.it[1].period, title: t.history.it[1].title },
-    { period: t.history.it[2].period, title: t.history.it[2].title },
   ]
 
   return (
@@ -55,23 +51,8 @@ export default function HeroSection() {
             <SocialLinks className="mt-6 -ml-2 animate-blur-in delay-500" />
           </div>
 
-          {/* right: role index + condensed career */}
+          {/* right: current role + view-profile link */}
           <div className="lg:col-span-5 lg:self-center lg:pl-12 lg:border-l lg:border-[color:var(--color-border-hairline)] animate-blur-in delay-300">
-            <ul className="flex flex-col gap-3.5">
-              {INDEX_KEYS.map((n) => (
-                <li key={n}>
-                  <Link href="#services" className="group flex items-baseline gap-3 focus-ring">
-                    <span className="num text-sm shrink-0" style={{ color: 'var(--color-text-dim)' }}>{n}</span>
-                    <span className="text-sm transition-colors group-hover:text-[color:var(--color-text)]" style={{ color: 'var(--color-text-muted)' }}>
-                      {h.roleIndex[n]}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            <div className="hairline-t my-7" />
-
             <Eyebrow className="mb-4" icon={<Milestone size={14} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />}>{h.careerHeading}</Eyebrow>
             <ul className="flex flex-col gap-3">
               {career.map((c, i) => (
