@@ -7,8 +7,6 @@ import Eyebrow from '@/components/ui/Eyebrow'
 import BlueprintGrid from '@/components/ui/BlueprintGrid'
 import AuroraGlow from '@/components/ui/AuroraGlow'
 import SocialLinks from '@/components/ui/SocialLinks'
-import InstagramIcon from '@/components/ui/InstagramIcon'
-import { BARTENDER } from '@/lib/content'
 import { useLocale } from '@/lib/i18n'
 
 const INDEX_KEYS = ['01', '02', '03'] as const
@@ -16,11 +14,11 @@ const INDEX_KEYS = ['01', '02', '03'] as const
 export default function HeroSection() {
   const { t } = useLocale()
   const h = t.hero
-  // top career excerpt: current role, latest PdM role, then the bar gig
-  const career: { period: string; title: string; instagram?: string }[] = [
+  // top career excerpt: three most relevant IT / PdM roles
+  const career: { period: string; title: string }[] = [
     { period: t.history.it[0].period, title: t.history.it[0].title },
     { period: t.history.it[1].period, title: t.history.it[1].title },
-    { period: t.history.bartender.period, title: t.history.bartender.title, instagram: BARTENDER.instagram },
+    { period: t.history.it[2].period, title: t.history.it[2].title },
   ]
 
   return (
@@ -80,19 +78,6 @@ export default function HeroSection() {
                 <li key={i}>
                   <span className="mono block text-[11px] mb-0.5" style={{ color: 'var(--color-text-dim)', letterSpacing: '0.03em' }}>{c.period}</span>
                   <span className="block text-sm leading-snug" style={{ color: 'var(--color-text-body)' }}>{c.title}</span>
-                  {c.instagram && (
-                    <a
-                      href={c.instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Instagram — 6grams（武蔵小山）"
-                      className="flex w-fit items-center gap-2 mt-2 text-[11px] transition-colors hover:text-[color:var(--color-accent-text)] focus-ring"
-                      style={{ color: 'var(--color-text-muted)' }}
-                    >
-                      <InstagramIcon size={15} />
-                      <span className="mono">@6grams_musashikoyama</span>
-                    </a>
-                  )}
                 </li>
               ))}
             </ul>

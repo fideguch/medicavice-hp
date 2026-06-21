@@ -1,7 +1,6 @@
 'use client'
 
 import Reveal from '@/components/ui/Reveal'
-import InstagramIcon from '@/components/ui/InstagramIcon'
 import type { CareerItem } from '@/lib/content'
 
 interface CareerTimelineProps {
@@ -55,19 +54,6 @@ export default function CareerTimeline({ items, compact = false }: CareerTimelin
               <p className="text-muted leading-relaxed mt-1" style={{ fontSize: compact ? '0.78rem' : '0.82rem' }}>
                 {m.sub}
               </p>
-            )}
-            {m.instagram && (
-              <a
-                href={m.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram — 6grams（武蔵小山）"
-                className="inline-flex items-center gap-2 mt-2.5 text-[11px] transition-colors hover:text-[color:var(--color-accent-text)] focus-ring"
-                style={{ color: 'var(--color-text-muted)' }}
-              >
-                <InstagramIcon size={15} />
-                <span className="mono">@6grams_musashikoyama</span>
-              </a>
             )}
           </Reveal>
         </li>

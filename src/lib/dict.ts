@@ -69,9 +69,12 @@ export const dict = {
       viewAllGithub: 'GitHub で全て見る',
       collab: {
         eyebrow: 'COLLABORATION',
-        title: 'WaWaTalk — 音声文字化デバイス',
-        body: '株式会社メディモニーとの共同開発により、医師の言葉をリアルタイムで文字化するタブレット型デバイスを提供しています。',
-        linkLabel: 'WaWaTalk を見る（株式会社メディモニー）',
+        title: '医療デバイスの共同開発',
+        body: '株式会社メディモニーと、医療現場の課題に応える医療デバイスを共同開発しています。',
+        devices: [
+          { name: '語心録', desc: '音声文字化デバイス' },
+          { name: 'WaWaTalk', desc: 'オンライン診療デバイス' },
+        ],
       },
     },
     products: {
@@ -130,7 +133,6 @@ export const dict = {
         { period: '令和2年6月', title: '五反田リハビリテーション病院勤務' },
         { period: '令和6年10月', title: '株式会社メディカバイス創業' },
       ],
-      bartender: { period: '2025.2 – 2025.11', title: 'バーでバイト', sub: '武蔵小山のカラオケバーで接客。破格で1人のお客様も多いです。' },
     },
     contact: {
       eyebrow: 'CONTACT',
@@ -288,9 +290,12 @@ export const dict = {
       viewAllGithub: 'See everything on GitHub',
       collab: {
         eyebrow: 'COLLABORATION',
-        title: 'WaWaTalk — speech-to-text device',
-        body: "Co-developed with Medimony Inc.: a tablet device that transcribes a doctor's speech in real time.",
-        linkLabel: 'View WaWaTalk (Medimony Inc.)',
+        title: 'Co-developing medical devices',
+        body: 'Co-developing medical devices with Medimony Inc. to meet real needs in clinical settings.',
+        devices: [
+          { name: 'Goshinroku（語心録）', desc: 'Speech-to-text device' },
+          { name: 'WaWaTalk', desc: 'Online medical examination device' },
+        ],
       },
     },
     products: {
@@ -349,7 +354,6 @@ export const dict = {
         { period: 'June 2020', title: 'Gotanda Rehabilitation Hospital' },
         { period: 'October 2024', title: 'Founded Medicavice Inc.' },
       ],
-      bartender: { period: 'Feb 2025 – Nov 2025', title: 'Bar staff', sub: 'Serving at a karaoke bar in Musashi-Koyama — plenty of solo regulars, at unbeatable prices.' },
     },
     contact: {
       eyebrow: 'CONTACT',

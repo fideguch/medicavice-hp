@@ -7,7 +7,7 @@ import Reveal from '@/components/ui/Reveal'
 import MaskText from '@/components/ui/MaskText'
 import ContributionGraph from '@/components/home/ContributionGraph'
 import { GH_USER, type Repo } from '@/lib/works'
-import { PRODUCTS, WAWATALK_URL } from '@/lib/content'
+import { PRODUCTS, MEDIMONY_DEVICE_URLS } from '@/lib/content'
 import { useLocale } from '@/lib/i18n'
 
 interface Contributions {
@@ -66,26 +66,37 @@ export default function WorksSection({ repos, contributions }: { repos: Repo[]; 
           )}
         </div>
 
-        {/* co-development partner: Medimony / WaWaTalk (backlink) */}
+        {/* co-development partner: Medimony — Goshinroku (speech-to-text) + WaWaTalk (online exam) */}
         <div className="mb-14">
           <Eyebrow className="mb-5" icon={<Handshake size={14} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--color-text-muted)' }} />}>{a.collab.eyebrow}</Eyebrow>
           <Reveal>
-            <a
-              href={WAWATALK_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="card card-hover focus-ring group block p-6 sm:p-7"
-              aria-label={`${a.collab.title} — WaWaTalk`}
-            >
-              <div className="flex items-start justify-between gap-3 mb-3">
-                <h3 className="heading-card" style={{ fontSize: '1.1rem' }}>{a.collab.title}</h3>
-                <ArrowUpRight size={18} aria-hidden="true" className="shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" style={{ color: 'var(--color-text-muted)' }} />
+            <div className="card p-6 sm:p-7">
+              <h3 className="heading-card mb-3" style={{ fontSize: '1.1rem' }}>{a.collab.title}</h3>
+              <p className="text-muted text-[13.5px] leading-relaxed mb-5 max-w-2xl">{a.collab.body}</p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                {a.collab.devices.map((dev, i) => {
+                  const url = MEDIMONY_DEVICE_URLS[i]
+                  if (!url) return null
+                  return (
+                    <a
+                      key={dev.name}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="card-hover focus-ring group flex flex-1 items-center justify-between gap-3 rounded-lg p-4"
+                      style={{ border: '1px solid var(--color-border)' }}
+                      aria-label={`${dev.name} — 株式会社メディモニー`}
+                    >
+                      <span className="flex flex-col">
+                        <span className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>{dev.name}</span>
+                        <span className="mono text-[10px] mt-0.5" style={{ color: 'var(--color-text-dim)' }}>{dev.desc}</span>
+                      </span>
+                      <ArrowUpRight size={16} aria-hidden="true" className="shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" style={{ color: 'var(--color-text-muted)' }} />
+                    </a>
+                  )
+                })}
               </div>
-              <p className="text-muted text-[13.5px] leading-relaxed mb-4 max-w-2xl">{a.collab.body}</p>
-              <span className="link-wipe inline-flex items-center gap-1.5 text-sm font-medium" style={{ color: 'var(--color-accent-text)' }}>
-                {a.collab.linkLabel}
-              </span>
-            </a>
+            </div>
           </Reveal>
         </div>
 

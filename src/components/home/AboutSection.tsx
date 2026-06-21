@@ -5,7 +5,7 @@ import MaskText from '@/components/ui/MaskText'
 import Eyebrow from '@/components/ui/Eyebrow'
 import { User, Briefcase, Stethoscope, Building2 } from 'lucide-react'
 import CareerTimeline from '@/components/company/CareerTimeline'
-import { HISTORY_IT, HISTORY_MED, BARTENDER, type CareerItem } from '@/lib/content'
+import { HISTORY_IT, HISTORY_MED, type CareerItem } from '@/lib/content'
 import { useLocale } from '@/lib/i18n'
 
 export default function AboutSection() {
@@ -14,8 +14,7 @@ export default function AboutSection() {
 
   // merge translated text (dict) with language-neutral iso/highlight (content)
   const itBase: CareerItem[] = t.history.it.map((x, i) => ({ ...x, iso: HISTORY_IT[i]?.iso ?? '', highlight: HISTORY_IT[i]?.highlight }))
-  const bartender: CareerItem = { ...t.history.bartender, iso: BARTENDER.iso, instagram: BARTENDER.instagram }
-  const itItems: CareerItem[] = [...itBase.slice(0, 2), bartender, ...itBase.slice(2)]
+  const itItems: CareerItem[] = itBase
   const medItems: CareerItem[] = t.history.med.map((x, i) => ({ ...x, iso: HISTORY_MED[i]?.iso ?? '', highlight: HISTORY_MED[i]?.highlight }))
 
   return (

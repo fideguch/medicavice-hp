@@ -11,7 +11,10 @@ export const SOCIAL = {
 }
 
 export const MEDIMONY_URL = 'https://www.medimony.co.jp/'
+export const GOSHINROKU_URL = 'https://www.medimony.co.jp/goshinroku/'
 export const WAWATALK_URL = 'https://www.medimony.co.jp/wawatalk/'
+/** Medimony co-developed devices, in display order (paired by index with dict.collab.devices). */
+export const MEDIMONY_DEVICE_URLS = [GOSHINROKU_URL, WAWATALK_URL] as const
 
 /** Capability areas for the 対応可能領域 strip — grouped clusters. Language-neutral: chips carry ja+en. */
 export const CAPABILITY_GROUPS = [
@@ -76,8 +79,6 @@ export interface CareerItem {
   title: string
   sub?: string
   highlight?: boolean
-  /** optional Instagram profile link shown on the entry */
-  instagram?: string
 }
 
 /** Language-neutral career metadata, parallel by index to dict.history.it / .med. */
@@ -98,9 +99,3 @@ export const HISTORY_MED: { iso: string; highlight?: boolean }[] = [
   { iso: '2020-06' },
   { iso: '2024-10', highlight: true },
 ]
-
-/** Bar work (fun side gig) — inserted into the career timeline with an Instagram link. */
-export const BARTENDER = {
-  iso: '2025-02',
-  instagram: 'https://www.instagram.com/6grams_musashikoyama/',
-}
